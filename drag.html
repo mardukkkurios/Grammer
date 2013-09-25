@@ -1,0 +1,58 @@
+<html>
+<body>
+<div style="position: relative; top: 3">
+<div style="background-color:blue; position: relative; left:30%; width:30%; padding: 10px 10px 10px 10px" draggable= "true" ondragstart="dragging(this)" ondragend="findrag(this)">
+<p style=" position: relative; left:30%; width:30%"> ejemplo</p>
+<p style=" position: relative; left:30%; width:30%"> para poder</p>
+<p style=" position: relative; left:30%; width:30%"> redimensionar</p>
+</div></div>
+<script>
+
+function dragging(element){
+startx=event.offsetX;
+starty=event.offsetY
+origen=9;
+if(event.offsetY<element.offsetHeight-20){origen=6;}
+if(event.offsetY<20){origen=3;}
+if(event.offsetX<element.offsetWidth-20)
+{ origen=8;
+if(event.offsetY<element.offsetHeight-20){origen=5;}
+if(event.offsetY<20){origen=2;}}
+if(event.offsetX<20)
+{origen=7;
+if(event.offsetY<element.offsetHeight-20){origen=4;}
+if(event.offsetY<20){origen=1;}}
+return false;
+}
+
+function findrag(element){
+alert(parseInt(event.offsetX));
+switch(origen)
+{
+case 1: element.style.paddingTop=parseInt(element.style.paddingTop)+(parseInt(element.getBoundingClientRect().top)-parseInt(event.offsetY))+"px";
+		element.style.paddingLeft=parseInt(element.style.paddingLeft)+(parseInt(element.getBoundingClientRect().left)+parseInt(event.offsetX))+"px";
+		break;
+case 2:	element.style.paddingTop=parseInt(element.style.paddingTop)-parseInt(event.offsetY)+"px";
+		break;
+case 3:	element.style.paddingTop=parseInt(element.style.paddingTop)-parseInt(event.offsetY)+"px";
+		element.style.paddingRight=parseInt(element.style.paddingRight)+parseInt(event.offsetX)+"px";
+		break;
+case 4:	element.style.paddingLeft=parseInt(element.style.paddingLeft)-parseInt(event.offsetX)+"px";
+		break;
+case 5:	break;
+case 6:	element.style.paddingRight=parseInt(element.style.paddingRight)+parseInt(event.offsetX)+"px";
+		break;
+case 7:	element.style.paddingBottom=parseInt(element.style.paddingBottom)+parseInt(event.offsetY)+"px";
+		element.style.paddingLeft=parseInt(element.style.paddingLeft)-parseInt(event.offsetX)+"px";
+		break;break;
+case 8:	element.style.paddingBottom=parseInt(element.style.paddingBottom)+parseInt(event.offsetY)+"px";
+		break;
+case 9:	element.style.paddingBottom=parseInt(element.style.paddingBottom)+parseInt(event.offsetY)+"px";
+		element.style.paddingRight=parseInt(element.style.paddingRight)+parseInt(event.offsetX)+"px";
+		break;
+}
+return false;
+}
+</script>
+</body>
+</html>

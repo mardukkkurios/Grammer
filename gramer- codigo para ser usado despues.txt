@@ -1,0 +1,12 @@
+codigo para ser usado despues
+
+
+para agregar las funciones a los usuarios
+_______________________________________________
+function addEvent(element, evnt, funct){
+  if(!element)return false;
+  if (element.attachEvent)
+   return element.attachEvent('on'+evnt, funct);
+  else
+   return element.addEventListener(evnt, funct, false);
+}

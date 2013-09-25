@@ -1,0 +1,21 @@
+ #interfazDeEdicion
+ {
+	float:left;
+	background-color:#ccc;
+	width:60%;
+	min-height:40em;
+ } 
+ 
+ #interfazDeObjetos
+ {
+	float:right;
+	width:30%;
+	height:40em;
+ }
+ 
+ .over {
+  border: 2px dashed #000;
+}
+ 
+ 
+ 
