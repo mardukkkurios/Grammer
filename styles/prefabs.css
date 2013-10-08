@@ -2,9 +2,7 @@
  .ContenedorAzulFuerte
  {
 	 background-color:#0000FF;
-	 width:inherit;
-	 min-width:200px;
-	 min-height:80px;
+	 padding: 10px 10px 10px 10px;
 	 margin:30px;
 	 border-style:solid;
 	 border-width:3px;
@@ -13,9 +11,7 @@
   .ContenedorAzulClaro
 {
 	 background-color:#A9D0F5;
-	 width:inherit;
-	 min-width:80px;
-	 min-height:200px;
+	 padding: 0px 0px 0px 0px;
 	 margin:30px;
 	 border-style:solid;
 	 border-width:3px;
