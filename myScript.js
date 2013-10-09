@@ -32,14 +32,16 @@ function handleDragStart(e) {
 }
 
 function handleDragOver(e) {
-  if(dragSrcEl!=null){
-	  if (e.preventDefault) {
+	if (e.preventDefault) {
 		e.preventDefault(); // Necessary. Allows us to drop.
-	  }
-	  e.dataTransfer.dropEffect = 'copy';  // See the section on the DataTransfer object.
-	  this.classList.add('over');
-  } 
-  return false;
+	}
+	if(dragSrcEl!=null){
+		  
+		e.dataTransfer.dropEffect = 'copy';  // See the section on the DataTransfer object.
+		this.classList.add('over');
+		this.parentNode.classList.remove('over');
+	} 
+	return false;
 }
 
 function handleDragEnter(e) {
@@ -69,6 +71,7 @@ function handleDrop(e) {
 		temp.addEventListener('dragleave', handleDragLeave, false);
 		temp.addEventListener('drop', handleDrop, false);
 		temp.addEventListener('dragend', handleDragEndForResize, false);
+		temp.addEventListener('click', handleClick, false);
 		temp.style.opacity = "1.0";
 		temp.draggable = true;
 		this.appendChild(temp);
@@ -92,42 +95,41 @@ function handleDragEndForResize(e) {
 	var oldPaddingRight  = isNaN(parseInt(this.style.paddingRight))?0:parseInt(this.style.paddingRight);
 	var oldPaddingTop    = isNaN(parseInt(this.style.paddingTop))?0:parseInt(this.style.paddingTop);
 	var oldPaddingBottom = isNaN(parseInt(this.style.paddingBottom))?0:parseInt(this.style.paddingBottom);
-	//alert(parseInt(e.offsetX));
 	switch(dragOrigin)
 	{
-	case 1: newPaddingX=oldPaddingLeft-parseInt(e.offsetX)+"px";
-			this.style.paddingLeft=parseInt(newPaddingX)<0?"0px":newPaddingX;
-			newPaddingY=oldPaddingTop-parseInt(e.offsetY)+"px";
-			this.style.paddingTop=parseInt(newPaddingY)<0?"0px":newPaddingY;
-			break;
-	case 2:	newPaddingY=oldPaddingTop-parseInt(e.offsetY)+"px";
-			this.style.paddingTop=parseInt(newPaddingY)<0?"0px":newPaddingY;
-			break;
-	case 3:	newPaddingX=oldPaddingRight+(parseInt(e.offsetX)-parseInt(this.offsetWidth))+"px";
-			this.style.paddingRight=parseInt(newPaddingX)<0?"0px":newPaddingX;
-			newPaddingY=oldPaddingTop-parseInt(e.offsetY)+"px";
-			this.style.paddingTop=parseInt(newPaddingY)<0?"0px":newPaddingY;
-			break;
-	case 4:	newPaddingX=oldPaddingLeft-parseInt(e.offsetX)+"px";
-			this.style.paddingLeft=parseInt(newPaddingX)<0?"0px":newPaddingX;
-			break;
-	case 5:	break;
-	case 6:	newPaddingX=oldPaddingRight+(parseInt(e.offsetX)-parseInt(this.offsetWidth))+"px";
-			this.style.paddingRight=parseInt(newPaddingX)<0?"0px":newPaddingX;
-			break;
-	case 7:	newPaddingX=oldPaddingLeft-parseInt(e.offsetX)+"px";
-			this.style.paddingLeft=parseInt(newPaddingX)<0?"0px":newPaddingX;
-			newPaddingY=oldPaddingBottom+(parseInt(e.offsetY)-parseInt(this.offsetHeight))+"px";
-			this.style.paddingBottom=parseInt(newPaddingY)<0?"0px":newPaddingY;
-			break;
-	case 8: newPaddingY=oldPaddingBottom+(parseInt(e.offsetY)-parseInt(this.offsetHeight))+"px";
-			this.style.paddingBottom=parseInt(newPaddingY)<0?"0px":newPaddingY;
-			break;
-	case 9:	newPaddingX=oldPaddingRight+(parseInt(e.offsetX)-parseInt(this.offsetWidth))+"px";
-			this.style.paddingRight=parseInt(newPaddingX)<0?"0px":newPaddingX;
-			newPaddingY=oldPaddingBottom+(parseInt(e.offsetY)-parseInt(this.offsetHeight))+"px";
-			this.style.paddingBottom=parseInt(newPaddingY)<0?"0px":newPaddingY;
-			break;
+		case 1: newPaddingX=oldPaddingLeft-parseInt(e.offsetX)+"px";
+				this.style.paddingLeft=parseInt(newPaddingX)<0?"0px":newPaddingX;
+				newPaddingY=oldPaddingTop-parseInt(e.offsetY)+"px";
+				this.style.paddingTop=parseInt(newPaddingY)<0?"0px":newPaddingY;
+				break;
+		case 2:	newPaddingY=oldPaddingTop-parseInt(e.offsetY)+"px";
+				this.style.paddingTop=parseInt(newPaddingY)<0?"0px":newPaddingY;
+				break;
+		case 3:	newPaddingX=oldPaddingRight+(parseInt(e.offsetX)-parseInt(this.offsetWidth))+"px";
+				this.style.paddingRight=parseInt(newPaddingX)<0?"0px":newPaddingX;
+				newPaddingY=oldPaddingTop-parseInt(e.offsetY)+"px";
+				this.style.paddingTop=parseInt(newPaddingY)<0?"0px":newPaddingY;
+				break;
+		case 4:	newPaddingX=oldPaddingLeft-parseInt(e.offsetX)+"px";
+				this.style.paddingLeft=parseInt(newPaddingX)<0?"0px":newPaddingX;
+				break;
+		case 5:	break;
+		case 6:	newPaddingX=oldPaddingRight+(parseInt(e.offsetX)-parseInt(this.offsetWidth))+"px";
+				this.style.paddingRight=parseInt(newPaddingX)<0?"0px":newPaddingX;
+				break;
+		case 7:	newPaddingX=oldPaddingLeft-parseInt(e.offsetX)+"px";
+				this.style.paddingLeft=parseInt(newPaddingX)<0?"0px":newPaddingX;
+				newPaddingY=oldPaddingBottom+(parseInt(e.offsetY)-parseInt(this.offsetHeight))+"px";
+				this.style.paddingBottom=parseInt(newPaddingY)<0?"0px":newPaddingY;
+				break;
+		case 8: newPaddingY=oldPaddingBottom+(parseInt(e.offsetY)-parseInt(this.offsetHeight))+"px";
+				this.style.paddingBottom=parseInt(newPaddingY)<0?"0px":newPaddingY;
+				break;
+		case 9:	newPaddingX=oldPaddingRight+(parseInt(e.offsetX)-parseInt(this.offsetWidth))+"px";
+				this.style.paddingRight=parseInt(newPaddingX)<0?"0px":newPaddingX;
+				newPaddingY=oldPaddingBottom+(parseInt(e.offsetY)-parseInt(this.offsetHeight))+"px";
+				this.style.paddingBottom=parseInt(newPaddingY)<0?"0px":newPaddingY;
+				break;
 	}
 	return false;
 }
@@ -149,4 +151,25 @@ function handleDragStartForResize(e){
 	//e.dataTransfer.effectAllowed='none';
 	this.style.pointerEvents='none';
 	return false;
+}
+
+////********Selection*********////
+function handleClick(e){
+	if(e.ctrlKey==1){//revisamos si esta o no la tecla control presionada
+		if(seleccion.indexOf(e.target)==-1){//si lo esta revisamos si el elemento clickeado esta actualmente entre los elementos seleccionados
+			seleccion.push(e.target);    //si no lo esta se agrega a la seleccion y se le agrega la clase css "seleccionado"
+			e.target.classList.add("seleccionado");
+		}else{//si ya lo esta se saca de la sseleccion y se le quita la clase css
+			seleccion.splice(seleccion.indexOf(e.target),1);//recomendado http://www.w3schools.com/jsref/jsref_splice.asp
+			e.target.classList.remove("seleccionado");
+		}
+	}else{
+		var temp=document.getElementsByTagName("*");//si se hace click sin ctrl entonces se limpia toda la seleccion
+		for(var i=0;i<temp.length;i++){//y a todos los elementos se les retira la clase "seleccionado"
+			temp[i].classList.remove("seleccionado");
+		}
+		seleccion=new Array();//luego se agrega el elemento clickeado a la selecion y se le agrega la clase
+		seleccion.push(e.target);
+		e.target.classList.add("seleccionado");
+	}	
 }
