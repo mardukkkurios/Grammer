@@ -157,23 +157,25 @@ function handleDragStartForResize(e){
 
 ////********Selection*********////
 function handleClick(e){
-	if(e.ctrlKey==1){//revisamos si esta o no la tecla control presionada
-		if(seleccion.indexOf(e.target)==-1){//si lo esta revisamos si el elemento clickeado esta actualmente entre los elementos seleccionados
-			seleccion.push(e.target);    //si no lo esta se agrega a la seleccion y se le agrega la clase css "seleccionado"
-			e.target.classList.add("seleccionado");
-		}else{//si ya lo esta se saca de la sseleccion y se le quita la clase css
-			seleccion.splice(seleccion.indexOf(e.target),1);//recomendado http://www.w3schools.com/jsref/jsref_splice.asp
-			e.target.classList.remove("seleccionado");
-		}
-	}else{
-		var temp=document.getElementsByTagName("*");//si se hace click sin ctrl entonces se limpia toda la seleccion
-		for(var i=0;i<temp.length;i++){//y a todos los elementos se les retira la clase "seleccionado"
-			temp[i].classList.remove("seleccionado");
-		}
-		seleccion=new Array();//luego se agrega el elemento clickeado a la selecion y se le agrega la clase
-		seleccion.push(e.target);
-		e.target.classList.add("seleccionado");
-	}	
+	if (this==e.target){
+		if(e.ctrlKey==1){//revisamos si esta o no la tecla control presionada
+			if(seleccion.indexOf(this)==-1){//si lo esta revisamos si el elemento clickeado esta actualmente entre los elementos seleccionados
+				seleccion.push(this);    //si no lo esta se agrega a la seleccion y se le agrega la clase css "seleccionado"
+				this.classList.add("seleccionado");
+			}else{//si ya lo esta se saca de la sseleccion y se le quita la clase css
+				seleccion.splice(seleccion.indexOf(this),1);//recomendado http://www.w3schools.com/jsref/jsref_splice.asp
+				this.classList.remove("seleccionado");
+			}
+		}else{
+			var temp=document.getElementsByTagName("*");//si se hace click sin ctrl entonces se limpia toda la seleccion
+			for(var i=0;i<temp.length;i++){//y a todos los elementos se les retira la clase "seleccionado"
+				temp[i].classList.remove("seleccionado");
+			}
+			seleccion=new Array();//luego se agrega el elemento clickeado a la selecion y se le agrega la clase
+			seleccion.push(this);
+			this.classList.add("seleccionado");
+		}	
+	}
 }
 
 ////*******Delete elements********////
