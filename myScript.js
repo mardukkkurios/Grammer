@@ -136,6 +136,7 @@ function handleDragEndForResize(e) {
 }
 
 function handleDragStartForResize(e){
+if(this==e.target){
 	dragOrigin=9;
 	if(e.offsetY<this.offsetHeight-20){dragOrigin=6;}
 	if(e.offsetY<20){dragOrigin=3;}
@@ -148,7 +149,7 @@ function handleDragStartForResize(e){
 		dragOrigin=7;
 		if(e.offsetY<this.offsetHeight-20){dragOrigin=4;}
 		if(e.offsetY<20){dragOrigin=1;}
-	}
+	}}
 	return false;
 }
 
