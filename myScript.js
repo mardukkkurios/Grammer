@@ -17,6 +17,8 @@ window.onload=function(){
 	temp.addEventListener('drop', handleDrop, false);
 	temp.addEventListener('dragend', handleDragEnd, false);
 	
+	temp=document.getElementsByTagName("body");
+	temp[0].addEventListener("keydown",handleKeyDown,false);
 	};
 
 
@@ -172,4 +174,15 @@ function handleClick(e){
 		seleccion.push(e.target);
 		e.target.classList.add("seleccionado");
 	}	
+}
+
+////*******Delete elements********////
+function handleKeyDown(e){
+	if(e.keyCode==46){//46 is the keyCode of SUPR/DEL
+		for(var i=0;i<seleccion.length;i++){
+			if(seleccion[i]!=null&&seleccion[i].parentNode!=null){
+				seleccion[i].parentNode.removeChild(seleccion[i]);
+			}
+		}
+	}
 }
