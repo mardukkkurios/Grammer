@@ -38,10 +38,8 @@ function handleDragOver(e) {
 		e.preventDefault(); // Necessary. Allows us to drop.
 	}
 	if(dragSrcEl!=null){
-		  
 		e.dataTransfer.dropEffect = 'copy';  // See the section on the DataTransfer object.
 		this.classList.add('over');
-		this.parentNode.classList.remove('over');
 	} 
 	return false;
 }
@@ -77,7 +75,7 @@ function handleDrop(e) {
 		temp.style.opacity = "1.0";
 		temp.draggable = true;
 		this.appendChild(temp);
-		
+
 		dragSrcEl=null;
 		e.dataTransfer.clearData();
 	}
@@ -133,6 +131,7 @@ function handleDragEndForResize(e) {
 				this.style.paddingBottom=parseInt(newPaddingY)<0?"0px":newPaddingY;
 				break;
 	}
+	dragOrigin=0;
 	return false;
 }
 
@@ -150,8 +149,6 @@ function handleDragStartForResize(e){
 		if(e.offsetY<this.offsetHeight-20){dragOrigin=4;}
 		if(e.offsetY<20){dragOrigin=1;}
 	}
-	//e.dataTransfer.effectAllowed='none';
-	this.style.pointerEvents='none';
 	return false;
 }
 
@@ -181,7 +178,7 @@ function handleClick(e){
 ////*******Delete elements********////
 function handleKeyDown(e){
 	if(e.keyCode==46){//46 is the keyCode of SUPR/DEL
-		for(var i=0;i<seleccion.length;i++){
+		for(var i=0;i<seleccion.length;i++){//go thtought the selection and delete all
 			if(seleccion[i]!=null&&seleccion[i].parentNode!=null){
 				seleccion[i].parentNode.removeChild(seleccion[i]);
 			}
