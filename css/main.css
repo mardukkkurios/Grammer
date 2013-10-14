@@ -1,5 +1,6 @@
  #interfazDeEdicion{
 	float:left;
+	/*background-color:#ccc;*/
 	width:100%;
 	height:100%;
  } 
@@ -13,7 +14,7 @@
  }
  
  .over {
-  
+  /*border: 2px dashed #000;*/
 }
  
  
