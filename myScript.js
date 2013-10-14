@@ -19,12 +19,14 @@ window.onload=function(){
 	
 	temp=document.getElementsByTagName("body");
 	temp[0].addEventListener("keydown",handleKeyDown,false);
-	};
+};
 
 
 //**********DRAG EVENTS**************************************//
+//*******Global variables for drag and drop*******////
 var dragSrcEl = null;
 var dragOrigin = 0;
+
 function handleDragStart(e) {
   this.style.opacity = '0.4';  // this / e.target is the source node.
   dragSrcEl = this;
@@ -55,7 +57,11 @@ function handleDragLeave(e) {
 
 function handleDrop(e) {
   // this / e.target is current target element.
-	this.classList.remove('over');
+	var t=document.getElementsByClassName('over');
+	for(var i=0;i<t.length;i++){
+		t[i].classList.remove('over');
+	}
+	
 	if (e.stopPropagation) {
 		e.stopPropagation(); // Stops some browsers from redirecting.
 	}
@@ -81,7 +87,6 @@ function handleDrop(e) {
 	}
 	return false;
 }
-
 
 function handleDragEnd(e){
 	this.style.opacity = '1.0';  // this / e.target is the source node.
@@ -136,20 +141,21 @@ function handleDragEndForResize(e) {
 }
 
 function handleDragStartForResize(e){
-if(this==e.target){
-	dragOrigin=9;
-	if(e.offsetY<this.offsetHeight-20){dragOrigin=6;}
-	if(e.offsetY<20){dragOrigin=3;}
-	if(e.offsetX<this.offsetWidth-20){ 
-		dragOrigin=8;
-		if(e.offsetY<this.offsetHeight-20){dragOrigin=5;}
-		if(e.offsetY<20){dragOrigin=2;}
+	if(this==e.target){
+		dragOrigin=9;
+		if(e.offsetY<this.offsetHeight-20){dragOrigin=6;}
+		if(e.offsetY<20){dragOrigin=3;}
+		if(e.offsetX<this.offsetWidth-20){ 
+			dragOrigin=8;
+			if(e.offsetY<this.offsetHeight-20){dragOrigin=5;}
+			if(e.offsetY<20){dragOrigin=2;}
+		}
+		if(e.offsetX<20){
+			dragOrigin=7;
+			if(e.offsetY<this.offsetHeight-20){dragOrigin=4;}
+			if(e.offsetY<20){dragOrigin=1;}
+		}
 	}
-	if(e.offsetX<20){
-		dragOrigin=7;
-		if(e.offsetY<this.offsetHeight-20){dragOrigin=4;}
-		if(e.offsetY<20){dragOrigin=1;}
-	}}
 	return false;
 }
 
