@@ -4,8 +4,8 @@
   "version": "1",
   "minimum_chrome_version": "23",
   "icons": {
-    "16": "Logo.png",
-    "128": "Logo.png"
+    "16": "img/Logo.png",
+    "128": "img/Logo.png"
   },
   "app": {
     "background": {

@@ -11,7 +11,7 @@ chrome.app.runtime.onLaunched.addListener(function() {
   var width = screenWidth;// * 80)/100);
   var height = screenHeight;
 
-  chrome.app.window.create('index.html', {
+  chrome.app.window.create('grammer.html', {
     bounds: {
       width: width,
       height: height,

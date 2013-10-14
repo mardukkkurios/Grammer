@@ -21,7 +21,6 @@ window.onload=function(){
 	temp[0].addEventListener("keydown",handleKeyDown,false);
 };
 
-
 //**********DRAG EVENTS**************************************//
 //*******Global variables for drag and drop*******////
 var dragSrcEl = null;
