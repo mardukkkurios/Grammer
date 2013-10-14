@@ -19,12 +19,19 @@ window.onload=function(){
 	
 	temp=document.getElementsByTagName("body");
 	temp[0].addEventListener("keydown",handleKeyDown,false);
+	
+	//TOOLS
+	tools = document.querySelectorAll('.tools  ul li a img');
+	[].forEach.call(tools, function(obj) {
+		obj.draggable = false;
+	});
 };
 
 //**********DRAG EVENTS**************************************//
 //*******Global variables for drag and drop*******////
 var dragSrcEl = null;
 var dragOrigin = 0;
+var seleccion=new Array();
 
 function handleDragStart(e) {
   this.style.opacity = '0.4';  // this / e.target is the source node.
@@ -181,13 +188,15 @@ function handleClick(e){
 	}
 }
 
-////*******Delete elements********////
+////*******Delete, cut, copy and past elements********////
 function handleKeyDown(e){
-	if(e.keyCode==46){//46 is the keyCode of SUPR/DEL
-		for(var i=0;i<seleccion.length;i++){//go thtought the selection and delete all
-			if(seleccion[i]!=null&&seleccion[i].parentNode!=null){
-				seleccion[i].parentNode.removeChild(seleccion[i]);
-			}
-		}
+	switch(e.keyCode){
+		//DEL
+		case 46:for(var i=0;i<seleccion.length;i++){//go throught the selection and delete all
+					if(seleccion[i]!=null&&seleccion[i].parentNode!=null){
+						seleccion[i].parentNode.removeChild(seleccion[i]);
+					}
+				}
+				break;
 	}
 }
