@@ -5,13 +5,14 @@
 
 .tools {
   width: 100px;
+  position:fixed;
+  top:0;
 }
 
 .tools:hover {}
 
 .tools ul {
   list-style: none;
-  position: fixed;
   width: 100px;
   color: white;
 }
@@ -26,8 +27,8 @@
 }
 .tools ul li a {
   display: block;
-  width: 56px;
-  height: 56px;
+  width: 75px;
+  height: 75px;
   -webkit-border-radius: 28px;
   -moz-border-radius: 28px;
   border-radius: 28px;
@@ -55,7 +56,11 @@
   transform: rotate(0) scale(1);
   opacity: 1;
 }
+.tools ul li.main{
+  background:url('../img/logo50.png') no-repeat;
+}
 .tools ul li.top {
+  background:url('../img/setup.png') no-repeat;
   -webkit-transform-origin: -52px 50%;
   -moz-transform-origin: -52px 50%;
   -o-transform-origin: -52px 50%;
@@ -66,6 +71,7 @@
 }
 
 .tools ul li.center {
+  background:url('../img/descarga.png') no-repeat;
   -webkit-transform-origin: -100px -100px;
   -moz-transform-origin: -100px -100px;
   -o-transform-origin: -100px -100px;
@@ -75,6 +81,7 @@
   left: 100px;
 }
 .tools ul li.bottom {
+  background:url('../img/preview.png') no-repeat;
   -webkit-transform-origin: 0px -140px;
   -moz-transform-origin: 0px -140px;
   -o-transform-origin: 0px -140px;

@@ -11,8 +11,7 @@ $(document).ready(function() {
 		$lefty.animate({left: parseInt($lefty.css('left'),10) == 0 ? -$lefty.outerWidth()+35 : 0});
   });
   
-  var $ultimoPresionado = 0;//$(this);  
-  
+  var $ultimoPresionado = 0;//$(this);
   $('#navigationMenu a').click(function() {//document.getElementById("BarraLateralIzquierda");//#navigationMenu a
     var $lefty = $("#BarraLaterarIzquerda");
 	if($ultimoPresionado == 0 || $ultimoPresionado == $(this).attr('class')|| $lefty.css('left')!='0px'){
@@ -33,7 +32,7 @@ $(document).ready(function() {
 			$("#barrasContainers").css("background-color", "#F89C47");
 			$("#containerButtons").css("background-color", "#DD6100");
 			$("#BarraLaterarIzquerda").css("background-color", "rgba(255, 143, 0, 0.43)");
-			break;
+			 break;
 		case 'portfolio':
 			$("#barrasContainers").css("background-color", "#F8FFA6");
 			$("#containerButtons").css("background-color", "#F3FC1E");
