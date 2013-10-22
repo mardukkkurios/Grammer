@@ -1,3 +1,9 @@
+//*******Global variables for drag and drop*******////
+var dragSrcEl = null;
+var dragOrigin = 0;
+var seleccion = new Array();
+var clipboard= new Array();
+
 //**********ONLOAD FUNCTION**********************************//
 window.onload=function(){			
 	//DEBUG
@@ -28,11 +34,6 @@ window.onload=function(){
 };
 
 //**********DRAG EVENTS**************************************//
-//*******Global variables for drag and drop*******////
-var dragSrcEl = null;
-var dragOrigin = 0;
-var seleccion=new Array();
-
 function handleDragStart(e) {
   this.style.opacity = '0.4';  // this / e.target is the source node.
   dragSrcEl = this;
@@ -46,7 +47,6 @@ function handleDragOver(e) {
 		e.preventDefault(); // Necessary. Allows us to drop.
 	}
 	if(dragSrcEl!=null){
-		e.dataTransfer.dropEffect = 'copy';  // See the section on the DataTransfer object.
 		this.classList.add('over');
 	} 
 	return false;
@@ -73,22 +73,19 @@ function handleDrop(e) {
 	}
 	
 	if(dragSrcEl!=null)
-	{
-		// Set the source column's HTML to the HTML of the column we dropped on.
-		var temp = document.importNode(dragSrcEl, true);
-		//e.dataTransfer.getData('text/html');
-		temp.addEventListener('dragstart', handleDragStartForResize, false);
-		temp.addEventListener('dragenter', handleDragEnter, false);
-		temp.addEventListener('dragover', handleDragOver, false);
-		temp.addEventListener('dragleave', handleDragLeave, false);
-		temp.addEventListener('drop', handleDrop, false);
-		temp.addEventListener('dragend', handleDragEndForResize, false);
-		temp.addEventListener('click', handleClick, false);
+	{//falta seleccion multiple
+		var temp;
+		if(e.dataTransfer.effectAllowed=='copy'){
+			// Set the source column's HTML to the HTML of the column we dropped on.
+			temp = document.importNode(dragSrcEl, true);
+			addEvents(temp);
+		}
+		if(e.dataTransfer.effectAllowed=='move')temp=dragSrcEl;
 		temp.style.opacity = "1.0";
-		temp.draggable = true;
 		this.appendChild(temp);
 
 		dragSrcEl=null;
+		dragOrigin=0;
 		e.dataTransfer.clearData();
 	}
 	return false;
@@ -98,7 +95,7 @@ function handleDragEnd(e){
 	this.style.opacity = '1.0';  // this / e.target is the source node.
 }
 
-////********Resize********/////////
+////********Resize and Move********/////////
 function handleDragEndForResize(e) {
 	var newPaddingX;
 	var newPaddingY;
@@ -143,30 +140,92 @@ function handleDragEndForResize(e) {
 				break;
 	}
 	dragOrigin=0;
+	this.style.opacity = '1.0';
 	return false;
 }
 
 function handleDragStartForResize(e){
 	if(this==e.target){
 		dragOrigin=9;
-		if(e.offsetY<this.offsetHeight-20){dragOrigin=6;}
-		if(e.offsetY<20){dragOrigin=3;}
-		if(e.offsetX<this.offsetWidth-20){ 
+		if(e.offsetY<this.offsetHeight-10){dragOrigin=6;}
+		if(e.offsetY<10){dragOrigin=3;}
+		if(e.offsetX<this.offsetWidth-10){ 
 			dragOrigin=8;
-			if(e.offsetY<this.offsetHeight-20){dragOrigin=5;}
-			if(e.offsetY<20){dragOrigin=2;}
+			if(e.offsetY<this.offsetHeight-10){
+				dragOrigin=5;
+				moving=true;
+				this.style.opacity = '0.4';  // this / e.target is the source node.
+				dragSrcEl = this;
+				e.dataTransfer.effectAllowed = 'move';
+				e.dataTransfer.setData('text/html', this.innerHTML);
+			}
+			if(e.offsetY<10){
+				dragSrcEl=null;
+				dragOrigin=2;
+				e.dataTransfer.clearData();
+			}
 		}
-		if(e.offsetX<20){
+		if(e.offsetX<10){
+			dragSrcEl=null;
 			dragOrigin=7;
-			if(e.offsetY<this.offsetHeight-20){dragOrigin=4;}
-			if(e.offsetY<20){dragOrigin=1;}
+			e.dataTransfer.clearData();
+			if(e.offsetY<this.offsetHeight-10){dragOrigin=4;}
+			if(e.offsetY<10){dragOrigin=1;}
 		}
 	}
 	return false;
 }
 
+function handleDropForMove(e) {
+  // this / e.target is current target element.
+	var t=document.getElementsByClassName('over');
+	for(var i=0;i<t.length;i++){
+		t[i].classList.remove('over');
+	}
+	
+	if (e.stopPropagation) {
+		e.stopPropagation(); // Stops some browsers from redirecting.
+	}
+	
+	var temp=null;
+	if(e.dataTransfer.effectAllowed=='copy'){
+		temp=document.importNode(dragSrcEl,true);
+		addEvents(temp);
+	}
+	if(e.dataTransfer.effectAllowed=='move'){
+		//esto tiene que cambiar para multiseleccion
+		temp=dragSrcEl;
+	}
+	temp.style.opacity = "1.0";
+	if(dragSrcEl!=null)
+	{
+		if(e.offsetY < this.offsetHeight/5){
+			this.parentNode.insertBefore(temp,this);
+		}else{ 
+			if(e.offsetY > this.offsetHeight*4/5){
+				insertAfter(temp,this);
+			}else{
+				if(e.offsetX < this.offsetWidth/5){
+					this.parentNode.insertBefore(temp,this);
+				}else{
+					if(e.offsetX > this.offsetWidth*4/5){
+						insertAfter(temp,this);
+					}else{
+						this.appendChild(temp);
+					}
+				}
+			}
+		}
+
+		dragSrcEl=null;
+		dragOrigin=0;
+		e.dataTransfer.clearData();
+	}
+	return false;
+}
+
 ////********Selection*********////
-function handleClick(e){
+function handleMouseDown(e){
 	if (this==e.target){
 		if(e.ctrlKey==1){//revisamos si esta o no la tecla control presionada
 			if(seleccion.indexOf(this)==-1){//si lo esta revisamos si el elemento clickeado esta actualmente entre los elementos seleccionados
@@ -188,15 +247,76 @@ function handleClick(e){
 	}
 }
 
-////*******Delete, cut, copy and past elements********////
+////*******Delete, cut, copy and paste elements*******////
 function handleKeyDown(e){
 	switch(e.keyCode){
 		//DEL
-		case 46:for(var i=0;i<seleccion.length;i++){//go throught the selection and delete all
-					if(seleccion[i]!=null&&seleccion[i].parentNode!=null){
-						seleccion[i].parentNode.removeChild(seleccion[i]);
+		case 46:while(seleccion.length>0){
+					if(seleccion[0]==null||seleccion[0].parentNode==null){
+						seleccion.shift()
+					}else{
+						seleccion[0].parentNode.removeChild(seleccion[0]);
+					}
+				}
+				break;
+		//C
+		case 67:clipboard=new Array();
+				for(var i=0;i<seleccion.length;i++){
+					clipboard.push(seleccion[i].cloneNode(true));
+				}
+				break;
+		//V
+		case 86:if(seleccion.length==0){
+					var iDE=document.getElementById("interfazDeEdicion");
+					var temp;
+					for(var i=0;i<clipboard.length;i++){
+						temp=clipboard[i].cloneNode(true);
+						addEvents(temp);
+						temp.classList.remove("seleccionado");
+						iDE.appendChild(temp);
+					}
+				}else{
+					var temp;
+					for(var i=0;i<seleccion.length;i++){
+						for(var j=0;j<clipboard.length;j++){
+							temp=clipboard[j].cloneNode(true);
+							addEvents(temp);
+							temp.classList.remove("seleccionado");
+							seleccion[i].appendChild(temp);
+						}
+					}
+				}
+				break;
+		//X
+		case 88:clipboard=new Array;
+				while(seleccion.length>0){
+					if(seleccion[0]==null||seleccion[0].parentNode==null){
+						seleccion.shift()
+					}else{
+						clipboard.push(seleccion[0].cloneNode(true));
+						seleccion[0].parentNode.removeChild(seleccion[0]);
 					}
 				}
 				break;
 	}
+}
+
+////*******Miscelaneous*******////
+function insertAfter(node,reference){ 
+	if(reference.nextSibling){ 
+		reference.parentNode.insertBefore(node,reference.nextSibling); 
+	} else { 
+		reference.parentNode.appendChild(node); 
+	}
+}
+
+function addEvents(element){
+		element.addEventListener('dragstart', handleDragStartForResize, false);
+		element.addEventListener('dragenter', handleDragEnter, false);
+		element.addEventListener('dragover', handleDragOver, false);
+		element.addEventListener('dragleave', handleDragLeave, false);
+		element.addEventListener('drop', handleDropForMove, false);
+		element.addEventListener('dragend', handleDragEndForResize, false);
+		element.addEventListener('mousedown', handleMouseDown, false);
+		element.draggable = true;
 }

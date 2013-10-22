@@ -1,27 +1,22 @@
 #interfazDeEdicion{
-	/*float:left;*/
-	background-color:#ccc;
 	position:relative;
 	top: 50px;
 	width:100%;
 	min-height:100%;
-	/*z-index:-100;*/
 } 
  
-#interfazDeObjetos{
+/*#interfazDeObjetos{
 	z-index:1;
 	position: fixed;
 	right:2em;
 	width:30%;
 	height:40em;
-}
+}*/
  
 .over {
 	/*border: 2px dashed #000;*/
 }
  
 .seleccionado{
-	background-color:red; 
-}
- 
- 
+	background-color:red !important; 
+} 
