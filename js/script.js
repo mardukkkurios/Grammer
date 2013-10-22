@@ -268,21 +268,33 @@ function handleKeyDown(e){
 		//V
 		case 86:if(seleccion.length==0){
 					var iDE=document.getElementById("interfazDeEdicion");
-					var temp;
+					var t;
+					var tdesc;
 					for(var i=0;i<clipboard.length;i++){
-						temp=clipboard[i].cloneNode(true);
-						addEvents(temp);
-						temp.classList.remove("seleccionado");
-						iDE.appendChild(temp);
+						t=clipboard[i].cloneNode(true);
+						addEvents(t);
+						t.classList.remove("seleccionado");
+						tdesc=t.querySelectorAll("*");
+						[].forEach.call(tdesc,function(obj){
+								addEvents(obj);
+								obj.classList.remove("seleccionado");
+							});
+						iDE.appendChild(t);
 					}
 				}else{
-					var temp;
+					var t;
+					var tdesc;
 					for(var i=0;i<seleccion.length;i++){
 						for(var j=0;j<clipboard.length;j++){
-							temp=clipboard[j].cloneNode(true);
-							addEvents(temp);
-							temp.classList.remove("seleccionado");
-							seleccion[i].appendChild(temp);
+							t=clipboard[j].cloneNode(true);
+							addEvents(t);
+							t.classList.remove("seleccionado");
+							tdesc=t.querySelectorAll("*");
+							[].forEach.call(tdesc,function(obj){
+								addEvents(obj);
+								obj.classList.remove("seleccionado");
+							});
+							seleccion[i].appendChild(t);
 						}
 					}
 				}
@@ -320,3 +332,4 @@ function addEvents(element){
 		element.addEventListener('mousedown', handleMouseDown, false);
 		element.draggable = true;
 }
+
