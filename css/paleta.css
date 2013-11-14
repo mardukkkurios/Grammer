@@ -22,6 +22,19 @@
 	-webkit-transition-delay:0s;
 	
 }
+.paletteContainer{ display:block; }
+.propertiesContainer{ display:none; }
+.moreStuffContainer{ display:none; }
+	
+.pin{
+	background: url('../img/Pin-icon.png') no-repeat;
+	background-position:0 0;
+	width:40px; 
+	height:40px;
+	border: none;
+	margin-bottom: 30px;
+	background-size: 80px 40px;*/
+}
 .rightSidebar:hover{
 	right: 0px;
 	
@@ -35,7 +48,7 @@
 	height: auto;
 	width: 10%;
 	float: left;
-	padding: 50px 0px;
+	padding: 5px 0px 50px 0px;
 	box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, 0);
 }
 .buttonsContainer:hover{

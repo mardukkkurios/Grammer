@@ -6,42 +6,70 @@ $(document).ready(function() {
   $('#slidewidth button').click(function() {
     $(this).next().animate({width: 'toggle'});
   });*/
-  $("#containerButtons").click(function() {//document.getElementById("BarraLateralIzquierda");//#navigationMenu a
-		var $lefty = $("#BarraLaterarIzquerda")
-		$lefty.animate({left: parseInt($lefty.css('left'),10) == 0 ? -$lefty.outerWidth()+35 : 0});
+  var $pinStatus = 0;
+  $("Button.pin").click(function() {//document.getElementById("BarraLateralIzquierda");//#navigationMenu a
+		var $righty = $(".rightSidebar")
+		if(parseInt($righty.css('right'),10) == 0 && $pinStatus == 1){
+			//se va a minimizar
+			//$(this).css( "background-color" );
+			//$(this).html("O");
+			$righty.attr('style', '');
+			$(this).css('backgroundPosition', '0 0');
+			$pinStatus = 0;
+			//alert("1");
+		}else{
+			//se va a expandir
+			//$(this).html("X");
+			$(this).css('backgroundPosition', '-40px 0');
+			$righty.animate({right: 0});
+			$pinStatus = 1;
+			//alert("2");
+		}
+		//$righty.animate({right: parseInt($righty.css('right'),10) != 0 ? 0});
   });
   
   var $ultimoPresionado = 0;//$(this);
-  $('#navigationMenu a').click(function() {//document.getElementById("BarraLateralIzquierda");//#navigationMenu a
-    var $lefty = $("#BarraLaterarIzquerda");
-	if($ultimoPresionado == 0 || $ultimoPresionado == $(this).attr('class')|| $lefty.css('left')!='0px'){
-		$lefty.animate({left: parseInt($lefty.css('left'),10) == 0 ? -$lefty.outerWidth()+35 : 0});
+  $('.navigationMenu a').click(function() {//document.getElementById("BarraLateralIzquierda");//#navigationMenu a
+    var $righty = $(".rightSidebar");
+	if($ultimoPresionado == 0 || $ultimoPresionado == $(this).attr('class')|| $righty.css('right')!='0px'){
+		//$righty.animate({right: parseInt($righty.css('right'),10) == 0 ? -$righty.outerWidth()+35 : 0});
 	}
+	
+	$(".paletteContainer").css('display','none');
+	$(".propertiesContainer").css('display','none');
+	$(".moreStuffContainer").css('display','none');
+	
 	switch ($(this).attr('class')){
 		case 'home':
-			$("#barrasContainers").css("background-color", "#83CF86");
-			$("#containerButtons").css("background-color", "#2E9B2E");
-			$("#BarraLaterarIzquerda").css("background-color", "rgba(0, 10, 253, 0.15)");
+			$(".barContainer").css("background-color", "#83CF86");
+			$(".buttonsContainer").css("background-color", "#2E9B2E");
+			$(".rightSidebar").css("background-color", "rgba(0, 10, 253, 0.15)");
+			
+			$(".paletteContainer").css('display','block');
 			break;
 		case 'about':
-			$("#barrasContainers").css("background-color", "#43C7E0");
-			$("#containerButtons").css("background-color", "#006ADD");
-			$("#BarraLaterarIzquerda").css("background-color", "rgba(0, 253, 81, 0.43)");
+			$(".barContainer").css("background-color", "#43C7E0");
+			$(".buttonsContainer").css("background-color", "#006ADD");
+			$(".rightSidebar").css("background-color", "rgba(0, 253, 81, 0.43)");
+			
+			$(".moreStuffContainer").css('display','block');
 			break;
 		case 'services':
-			$("#barrasContainers").css("background-color", "#F89C47");
-			$("#containerButtons").css("background-color", "#DD6100");
-			$("#BarraLaterarIzquerda").css("background-color", "rgba(255, 143, 0, 0.43)");
-			 break;
+			$(".barContainer").css("background-color", "#F89C47");
+			$(".buttonsContainer").css("background-color", "#DD6100");
+			$(".rightSidebar").css("background-color", "rgba(255, 143, 0, 0.43)");
+	
+			$(".propertiesContainer").css('display','block');
+			break;
 		case 'portfolio':
-			$("#barrasContainers").css("background-color", "#F8FFA6");
-			$("#containerButtons").css("background-color", "#F3FC1E");
-			$("#BarraLaterarIzquerda").css("background-color", "rgba(0, 255, 245, 0.43)");
+			$(".barContainer").css("background-color", "#F8FFA6");
+			$(".buttonsContainer").css("background-color", "#F3FC1E");
+			$(".rightSidebar").css("background-color", "rgba(0, 255, 245, 0.43)");
 			break;
 		case 'contact':
-			$("#barrasContainers").css("background-color", "#DFA6FF");
-			$("#containerButtons").css("background-color", "#D81EFC");
-			$("#BarraLaterarIzquerda").css("background-color", "rgba(253, 0, 172, 0.59)");
+			$(".barContainer").css("background-color", "#DFA6FF");
+			$(".buttonsContainer").css("background-color", "#D81EFC");
+			$(".rightSidebar").css("background-color", "rgba(253, 0, 172, 0.59)");
 			break;
 		default:
 		break;
@@ -49,15 +77,15 @@ $(document).ready(function() {
 	$ultimoPresionado = $(this).attr('class');
 	});
 /*
-  $('#slidemarginleft button').click(function() {
-    var $marginLefty = $(this).next();
-    $marginLefty.animate({marginLeft: parseInt($marginLefty.css('marginLeft'),10) == 0 ? $marginLefty.outerWidth() : 0});
+  $('#slidemarginright button').click(function() {
+    var $marginrighty = $(this).next();
+    $marginrighty.animate({marginright: parseInt($marginrighty.css('marginright'),10) == 0 ? $marginrighty.outerWidth() : 0});
   });
   
   $('#slidewidthsome button').click(function() {
     var $some = $(this).next(),
     someWidth = $some.outerWidth(),
     parentWidth = $some.parent().width();
-    $some.animate({width: someWidth === parentWidth ? someWidth/2 : parentWidth - (parseInt($some.css('paddingLeft'),10) + parseInt($some.css('paddingRight'),10))});
+    $some.animate({width: someWidth === parentWidth ? someWidth/2 : parentWidth - (parseInt($some.css('paddingright'),10) + parseInt($some.css('paddingRight'),10))});
   }); */ 
 });
