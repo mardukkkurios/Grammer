@@ -9,8 +9,20 @@
   },
   "app": {
     "background": {
-      "scripts": ["js/main.js"]
+      "scripts": ["js/background.js"]
     }
   },
-  "offline-enabled":true
+  "offline_enabled":true,
+  "permissions": [
+    {"fileSystem": ["write", "retainEntries", "directory"]},
+    "storage"
+  ],
+  "file_handlers": {
+    "text": {
+      "types": [
+          "text/*"
+      ],
+      "title": "Text editor"
+    }
+  }
 }
