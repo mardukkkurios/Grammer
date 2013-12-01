@@ -20,8 +20,22 @@
           .attr( "title", "" )
           .attr( "id", "EscribeCssTextbox" )
           .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
-		  .focus(cargaTodosLosIdsClasesYElementos)
-          .keyup(ocupaCambio)
+		  .focus(miFocusInicio)
+          .blur(miFocusTerminoAgregar)
+		  .bind('keypress', function (event) {
+				var regex = new RegExp(",+");
+				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+				if (regex.test(key)) {
+				   //alert("entro");
+				   event.preventDefault();
+				   agregarOtro = $(this).parent().parent().parent().next();
+				   //alert(agregarOtro.prop('class'))
+				   agregarOtro[0].click();
+				   return false;
+				}
+			})
+          .keyup(miTextChanged)
+		  .on("input", null, null, miTextChanged)
           .autocomplete({
             delay: 0,
             minLength: 0,
@@ -38,6 +52,8 @@
             this._trigger( "select", event, {
               item: ui.item.option
             });
+			document.getElementById("EscribeCssTextbox").value = ui.item.option.text;
+			miTextChanged();
           },
  
           autocompletechange: "_removeIfInvalid"
@@ -65,6 +81,7 @@
             wasOpen = input.autocomplete( "widget" ).is( ":visible" );
           })
           .click(function() {
+			event.preventDefault();
             input.focus();
  
             // Close if already visible
@@ -91,7 +108,8 @@
       },
  
       _removeIfInvalid: function( event, ui ) {
- 
+		miFocusTerminoAgregar();
+		return;
         // Selected an item, nothing to do
         if ( ui.item ) {
           return;
@@ -109,6 +127,7 @@
         });
  
         // Found a match, nothing to do
+		valid = true;
         if ( valid ) {
           return;
         }
@@ -138,6 +157,7 @@
   $(function() {
     $( "#combobox" ).combobox();
     $( "#toggle" ).click(function() {
+	  event.preventDefault();
       $( "#combobox" ).toggle();
     });
   });

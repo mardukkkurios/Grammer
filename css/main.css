@@ -1,6 +1,11 @@
-body {
+body  .bodyPrincipal{
 	font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
 	font-size: 62.5%;
+	width: auto;
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	height: auto;
 }
 
 #interfazDeEdicion{

@@ -1,0 +1,135 @@
+/****PROPERTIES MENU***********************/
+.propertiesMenu{
+height: 40px;
+}
+.propertiesMenu input {
+float: right;
+width: 40px;
+height: 40px;
+margin-top: -5px;
+margin-right: 5px;
+-webkit-box-shadow: -5px 0px 11px rgba(50, 50, 50, 0.26);
+}
+.propertiesMenu input:active{
+-webkit-box-shadow: -5px 0px 16px rgba(50, 50, 50, 0.72);
+}
+/****SELECTORES***************************/
+.selectorsContainer {
+background-color: rgba(52, 116, 199, 0.77);
+color: #FFF;
+width: 110px;
+padding-left: 10px;
+padding-top: 15px;
+padding-bottom: 15px;
+border-top-left-radius: 30px;
+box-shadow: -7px -6px 7px rgba(50, 50, 50, 0.7);
+margin-left: 10px;
+position: relative;
+z-index: 2;
+}
+.selectorsContainer .izquierdaAbajo {
+left: 0px;
+height: 18px;
+width: 105px;
+padding-top: 5px;
+padding-left: 40px;
+}
+.propertiesContainer .selectors a {
+display: block;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+font-size: 11px;
+font-style: italic;
+font-weight: bold;
+margin-bottom: 0px;
+margin-top: 3px;
+text-decoration: none;
+}
+
+
+
+/*****PROPIEDADES**************************/
+.styleRule div {
+display: inline;
+width: 12em;
+overflow:hidden; 
+text-overflow:ellipsis;
+}
+/*.styleRule{
+	border: none;
+}*/
+.styleMainContainer table{
+width: 13em;
+}
+.styleMainContainer td:nth-child(odd) {
+border: none;
+}
+.styleMainContainer td a {
+display: block;
+width: 7em;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+font-size: 14px;
+}
+
+.styleMainContainer td input {
+width: 70px;
+height: 20px;
+box-shadow: -1px -1px 0px rgba(50, 50, 50, 0.7);
+display:none;
+}
+
+/****MAIN STYLE CONTAINER***************************/
+
+
+.styleMainContainer {
+background-color: #FF2900;
+box-shadow: -4px -3px 5px rgba(50, 50, 50, 0.7);
+padding: 7px 55px 10px 30px;
+margin-left: 5px;
+left: 0px;
+top: -20px;
+display: block;
+position: relative;
+z-index: 1;
+font-size: 12px;
+}
+
+
+.izquierdaAbajo {
+position: relative;
+left: -10;
+width: 200px;
+}
+.derechaArriba {
+float: right;
+position: relative;
+top: -1;
+right: 0px;
+font-size: 12px;
+}
+
+.derechaArriba a {
+text-decoration: none;
+font-size: 14px;
+}
+/******OTRA COSAS DE PROPIEDADES*****************/
+
+.propertiesContainer {
+margin-left: 5px;
+margin-top: 10px;
+margin-right: 7px;
+margin-bottom: 5px;
+}
+
+.propertiesContainer a.selector span{
+transition: margin-left .1s, color .5s;
+color: #000;
+margin-left: 0px;
+}
+.propertiesContainer a.selector:hover span{
+color: #F1F1F1;
+margin-left: 10px;
+}

@@ -43,33 +43,33 @@ $(document).ready(function() {
 		case 'home':
 			$(".barContainer").css("background-color", "#83CF86");
 			$(".buttonsContainer").css("background-color", "#2E9B2E");
-			$(".rightSidebar").css("background-color", "rgba(0, 10, 253, 0.15)");
+			$(".rightSidebar").css("background", "-webkit-linear-gradient(rgba(31, 255, 0, 0.47), rgba(0, 253, 81, 0.43))");
 			
 			$(".paletteContainer").css('display','block');
 			break;
 		case 'about':
 			$(".barContainer").css("background-color", "#43C7E0");
 			$(".buttonsContainer").css("background-color", "#006ADD");
-			$(".rightSidebar").css("background-color", "rgba(0, 253, 81, 0.43)");
+			$(".rightSidebar").css("background", "-webkit-linear-gradient(rgba(31, 255, 0, 0.47), rgba(0, 253, 81, 0.43))");
 			
 			$(".moreStuffContainer").css('display','block');
 			break;
 		case 'services':
-			$(".barContainer").css("background-color", "#F89C47");
+			$(".barContainer").css("background-color", "#308686");
 			$(".buttonsContainer").css("background-color", "#DD6100");
-			$(".rightSidebar").css("background-color", "rgba(255, 143, 0, 0.43)");
+			$(".rightSidebar").css("background", "-webkit-linear-gradient(rgba(255, 0, 0, 0.55), rgba(253, 0, 0, 0.11))");
 	
 			$(".propertiesContainer").css('display','block');
 			break;
 		case 'portfolio':
 			$(".barContainer").css("background-color", "#F8FFA6");
 			$(".buttonsContainer").css("background-color", "#F3FC1E");
-			$(".rightSidebar").css("background-color", "rgba(0, 255, 245, 0.43)");
+			$(".rightSidebar").css("background", "-webkit-linear-gradient(rgba(31, 255, 0, 0.47), rgba(0, 253, 81, 0.43))");
 			break;
 		case 'contact':
 			$(".barContainer").css("background-color", "#DFA6FF");
 			$(".buttonsContainer").css("background-color", "#D81EFC");
-			$(".rightSidebar").css("background-color", "rgba(253, 0, 172, 0.59)");
+			$(".rightSidebar").css("background", "-webkit-linear-gradient(rgba(31, 255, 0, 0.47), rgba(0, 253, 81, 0.43))");
 			break;
 		default:
 		break;

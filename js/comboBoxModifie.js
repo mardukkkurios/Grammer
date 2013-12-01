@@ -4,142 +4,196 @@ var tiposDeElementos;
 var elementsId;
 var penUltimaCadenaFuncional=" ";
 var ultimaCadenaFuncional="";
-var palabrasFuncionales = 0;
-var subPalabrasFuncionales = 0;
+//var palabrasFuncionales = 0;
+//var subPalabrasFuncionales = 0;
+var precadena = "#interfazDeEdicion ";
 var status = 1;
 var lastStatus = 0;
 
+
+
+var focusGained = false;
+function miFocusInicio(){
+	if(focusGained == true)return;
+	//alert("focus");
+	focusGained=true;
+	cargaTodosLosIdsClasesYElementos();
+	//$("#EscribeCssTextbox").keydown();
+	//input.autocomplete( "search", "" );
+	//alert("Focus Gained");
+}
+var lastText = "";
+function miTextChanged(){
+	var input = document.getElementById("EscribeCssTextbox");
+	text = input.value;
+	//revisa si hay comas
+	var regex = new RegExp(",+");
+	if (regex.test(text)) {
+		input.value = text.replaceAll(","," ");
+	}
+	//if(focusGained == false)return;
+	//alert(event.which);
+	if(lastText === input.value) return;
+	lastText = input.value;
+	ocupaCambio();
+	
+}
+function miFocusTerminoAgregar(){
+	if(focusGained==false)return;
+	focusGained=false;
+	selector = $("#ui-widget-Su-Id");
+	selector.css('display', 'none');
+	//	borralo
+	if(isBlank($("#EscribeCssTextbox").val())){
+		var textNodeLink = jQuery.data(selector.prev()[0],"textNode");
+		
+		if(textNodeLink.parentNode.firstChild !=textNodeLink){//revisa si hay mas de un elemento			
+			if(textNodeLink.nodeValue[textNodeLink.nodeValue.length-1]!=',')//revisa que SI exista la coma
+			{
+				var antTextNode = textNodeLink.previousSibling;//toma el elemento de atras para ponerle la coma
+				if(antTextNode.nodeValue[antTextNode.nodeValue.length-1]==',')
+					antTextNode.nodeValue = antTextNode.nodeValue.substring(0,antTextNode.nodeValue.length-1);
+			}
+		}
+		textNodeLink.parentNode.removeChild(textNodeLink);
+		selector.prev().remove();
+		return;
+	}else{
+	//Cambia su contenido
+		var result = $("#EscribeCssTextbox").val();
+		selector.prev()
+			.text(result)
+			.attr({"title" : result})
+			.css('display', 'block');
+		//nodo de link
+		result = precadena + result;
+		var textNodeLink = jQuery.data(selector.prev()[0],"textNode");
+		if(textNodeLink.nextSibling.nodeValue=="{")//si es ultimo
+			textNodeLink.nodeValue = result;
+		else textNodeLink.nodeValue = result+",";
+		
+		if(textNodeLink.parentNode.firstChild !=textNodeLink){//revisa que no estemos modificando el -1
+			var antTextNode = textNodeLink.previousSibling;//toma el elemento de atras para ponerle la coma
+			if(antTextNode.nodeValue[antTextNode.nodeValue.length-1]!=',')//revisa que SI exista la coma
+				antTextNode.nodeValue = antTextNode.nodeValue + ",";
+		}
+	}
+}
+
 function ocupaCambio(){
+
 	var input = document.getElementById("EscribeCssTextbox");
 	var text = input.value;
-
+	//alert("."+text+".");
+	//recorre iterador hasta la primera letra o a len
 	var it=0;
 	var len = text.length;
 	while(it<len){
 		if(text[it]!=' ')break;
 		it++;
 	}
+	//si cadena vacia o espacios "           "
+	if (it == len){
+	//llena con todo
+		status = 1;
+		ultimaCadenaFuncional = "";
+		cargaTodosLosIdsClasesYElementos();
+		return;
+	}
+	//comprime cadena, ponla en la cadena text
     var pos = 0;
 	var check = false;
 	var arrayResultante="";
 	for( ; it<len; it++){
-		if(text[it]!=' '){
+		if(text[it]!=' '){//concatena las todas letras
 			arrayResultante += text[it];
             pos++;
             check = true;
 		}else{
-			if(check==true ){
+			if(check==true ){//concatena solo el primer espacio que encuentres despues de las letras
 				arrayResultante += text[it];
 				check=false;
 				pos++;
 			}
 		}
 	}
+	//elimina el ultimo espacio. Si existe claro
 	if(pos>0)if(arrayResultante[arrayResultante.length-1]==' ')
 		text = arrayResultante.substring(0, arrayResultante.length-1);
 	else text = arrayResultante;
-
-
-	if(text=="" || text==null){
+	
+	//procesemos para ver hasta donde es valido
+	var ultimo = text[text.length-1]; //ultimo caracter
+	var select = "";
+	if(ultimo!='.' && ultimo!='#') //trata de hacer la consulta
+		select = document.querySelectorAll(precadena + text);
+		//alert("Len "+select.length);
+	if(select.length > 0){ //si devolvio algo
+		ultimaCadenaFuncional = text;
 		status = 1;
-		document.getElementById("div17").innerHTML = "Status: "+status;
 		cargaTodosLosIdsClasesYElementos();
 		return;
-	}else{
-		//alert("Texto: "+text);
-		var ultimo = text[text.length-1];
-		var select = "";
-		if(ultimo!='.' && ultimo!='#')
-		 	select = document.querySelectorAll(text);
-		if(select.length > 0){
-			document.getElementById("message").innerHTML = "CORRECTO";
-			ultimaCadenaFuncional = text;
-			palabrasFuncionales = countWordsIn(ultimaCadenaFuncional);
-			subPalabrasFuncionales = lastWordSubCount(ultimaCadenaFuncional);
-			status = 1;
-			document.getElementById("div17").innerHTML = "Status: "+status;
-			cargaTodosLosIdsClasesYElementos();
-			return;
-		}else{
-			document.getElementById("message").innerHTML = "Incorrecto";
-			if(text.indexOf(ultimaCadenaFuncional)==-1){
-				document.getElementById("message").innerHTML = "reload raiz";
-				len = text.length;
-				if(ultimaCadenaFuncional.length < len) len = ultimaCadenaFuncional.length;
-				var max=0;
-				while(max<len){
-					if(ultimaCadenaFuncional[max]!=text[max])break;
-					max++;
-				}
-				max--;
+	}else
+	{ 	//si no devolvio nada puede estar bien parcialmente. Casi todos caen aqui
+		//reducelo hasta la parte funcional cercana lejana posible
+		var ultimaLetra = ' ';
+		if(text.indexOf(ultimaCadenaFuncional)==-1){ // si no encontro completa a ultima cadena funcional
+			
+			//compara la cadena vieja y nueva hasta que punto son iguales
+			len = text.length;
+			if(ultimaCadenaFuncional.length < len) len = ultimaCadenaFuncional.length;
+			var max=0;
+			while(max<len){//llegamos al punto diferente rompemos
+				if(ultimaCadenaFuncional[max]!=text[max])break;
+				max++;
+			}
+			
+				//si la diferencia toca una letra esa palabra se echo a perder
 				while(max>0){
-					if(!(text[max]=='#'||text[max]=='.'||text[max]==' '))break;
+					if(ultimaCadenaFuncional[max]=='#'||ultimaCadenaFuncional[max]=='.'||ultimaCadenaFuncional[max]==' ')break;
 					max--;
 				}
-				if(max<0)max=0;
-				if(!(text[max]=='#'||text[max]=='.'||text[max]==' '))max++;
-				if(max>0) ultimaCadenaFuncional = text.substring(0,max);
-				else ultimaCadenaFuncional = "";
-			}
-				if(ultimaCadenaFuncional==""){
+				//borra los signos y espacios de lo que quede a la orilla
+				while(max>0){
+					if(!(ultimaCadenaFuncional[max]=='#'||ultimaCadenaFuncional[max]=='.'||ultimaCadenaFuncional[max]==' '))break; 
+					//Mientras caracter es ['.', ' ', '#'] -> CONTINUA max--;
+					//rompe si estoy en letras
+					max--;
+				}
+				if(max<0){
+					ultimaCadenaFuncional = "";
 					status = 1;
-					document.getElementById("div17").innerHTML = "Status: "+status;
 					cargaTodosLosIdsClasesYElementos();
 					return;
-				}	
-				//ultima cadena sigue intacta
-				var temp = text.substring(ultimaCadenaFuncional.length);
-				document.getElementById("message").innerHTML = temp;
-				switch (temp[0]){
-					case '#': status = 3; break;
-					case '.': status = 4; break;
-					case ' ': status = 1; break;
-					default: status = 0; break;
+				}else{
+					//if(!(text[max]=='#'||text[max]=='.'||text[max]==' '))
+						max++;//si letra, incrementa uno por la cuestion de longintud
+						ultimaLetra = ultimaCadenaFuncional[max];
+						ultimaCadenaFuncional = ultimaCadenaFuncional.substring(0,max);
+						//alert(ultimaCadenaFuncional);
+					//else ultimaCadenaFuncional = "";
 				}
-				document.getElementById("div17").innerHTML = "Status: "+status;
+		}
+		//Para este punto sabemos que ultimaCadenaFuncionalEstaActualizada
+		//si vacia carga todo
+			if(ultimaCadenaFuncional==""){
+				status = 1;
 				cargaTodosLosIdsClasesYElementos();
 				return;
-		}
-	}
-}
-function lastWordSubCount(temp){
-	var cont = 0;
-	var len = temp.length;
-	var ini;
-	var check = false;
-	for(ini=len-1; ini>=0; ini--){
-		if(check==false){
-			if(temp[ini]!=' ')check=true;
-		}else{
-			if(temp[ini]==' ')break;
-		}
-	}
-	if(temp[ini]==' ')ini+=2;
-	cont = 1;
-	if(ini>=len)return cont;
-	
-	for(var i = ini; i<len; i++){
-		if(temp[i]=='#'|| temp[i]=='.'){
-			cont++;
-		}
-	}
-	return cont;
-}
-function countWordsIn(temp){
-	var cont = 0;
-	var len = temp.length;
-	var check = false;
-	for(var i = 0; i<len; i++){
-		if(temp[i]!=' '){
-			if(check == false){
-				cont++;
-				check=true;
+			}	
+			//ultima cadena contiene algo
+			switch (ultimaLetra){
+				case '#': status = 3; break;
+				case '.': status = 4; break;
+				case ' ': status = 1; break;
+				default: status = 0; break;
 			}
-		}else{
-			check=false;
-		}
+			//alert(status+ultimaLetra);
+			cargaTodosLosIdsClasesYElementos();
+			return;
+		
 	}
-	return cont;
+	
 }
 
 function cargaTodosLosIdsClasesYElementos(e){
@@ -149,15 +203,20 @@ function cargaTodosLosIdsClasesYElementos(e){
 	
 	switch (status){
 		case '1':
-			select = document.querySelectorAll(ultimaCadenaFuncional+" *");
+			select = document.querySelectorAll(precadena + ultimaCadenaFuncional+" *");
+			//alert("o1");
 		break;
 		case '3':
-			select = document.querySelectorAll(ultimaCadenaFuncional); //#
+			select = document.querySelectorAll(precadena + ultimaCadenaFuncional); //#
+			//alert("o2");
 		break;
 		case '4':
-			select = document.querySelectorAll(ultimaCadenaFuncional); //.
+			select = document.querySelectorAll(precadena + ultimaCadenaFuncional); //.
+			//alert("o3");
 		break;
 		default:
+		//alert(ultimaCadenaFuncional);
+			//alert(status + "ESTO NO DEBERIA DE PASAR, LLAMA A LA POLICIA !!! ");
 			return;
 		break;
 	}	
@@ -165,7 +224,6 @@ function cargaTodosLosIdsClasesYElementos(e){
 	clases = null;
 	clases = [];
 	elementsId = null;
-	
 	elementsId = [];
 	tiposDeElementos = null;
 	tiposDeElementos = [];
@@ -200,6 +258,7 @@ function cargaTodosLosIdsClasesYElementos(e){
 		}
 		if(select[i].id != " " && select[i].id != "" && select[i].id != "undefined"){
 			if ((jQuery.inArray(select[i].id, elementsId)) == -1)
+					if(select[i].id.indexOf("_3L3M3NTO_P4R4_B0RR4R_")==-1)
 							elementsId.push("#".concat(select[i].id));
 		}
 		
@@ -254,6 +313,26 @@ switch (status){
 }
 	var contenedor = document.getElementById("combobox");
 	contenedor.innerHTML = "";
+	{
+		if(ultimaCadenaFuncional != ""){
+			var variable = ultimaCadenaFuncional + " ";
+			var node=document.createElement("OPTION");
+			node.value = variable;
+			var textnode = document.createTextNode(variable);
+			node.appendChild(textnode);
+			contenedor.appendChild(node);
+		}
+		
+		if(ultimaCadenaFuncional[ultimaCadenaFuncional.length-1] != '*'){
+			var variable = ultimaCadenaFuncional + " *";
+			var node=document.createElement("OPTION");
+			node.value = variable;
+			var textnode = document.createTextNode(variable);
+			node.appendChild(textnode);
+			contenedor.appendChild(node);
+		}
+	}
+	//alert(tiposDeElementos.length +"  "+elementsId.length+"  "+clases.length);
 	for(var i=0; i<tiposDeElementos.length; i++){
 		var node=document.createElement("OPTION");
 		node.value = prestring + tiposDeElementos[i];

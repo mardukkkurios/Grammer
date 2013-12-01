@@ -7,7 +7,7 @@ var clipboard= new Array();
 //**********ONLOAD FUNCTION**********************************//
 window.onload=function(){			
 	//PALETA
-	objetosPaleta = document.querySelectorAll('#interfazDeObjetos *');
+	objetosPaleta = document.querySelectorAll('#grammerDevelopmentAppContainer .paletteContainer *');
 	[].forEach.call(objetosPaleta, function(obj) {
 		obj.draggable = true;
 		obj.addEventListener('dragstart', handleDragStart, false);
@@ -21,7 +21,19 @@ window.onload=function(){
 	temp.addEventListener('drop', handleDrop, false);
 	temp.addEventListener('dragend', handleDragEnd, false);
 	temp.addEventListener('click', handleClickForCleanSelection, false);
+	// AppendChild SecondBody
+	var secondBody=document.createElement("body");
+	temp.appendChild(secondBody);
+	temp = secondBody;
+	temp.addEventListener('dragenter', handleDragEnter, false);
+	temp.addEventListener('dragover', handleDragOver, false);
+	temp.addEventListener('dragleave', handleDragLeave, false);
+	temp.addEventListener('drop', handleDrop, false);
+	temp.addEventListener('dragend', handleDragEnd, false);
+	temp.addEventListener('click', handleClickForCleanSelection, false);
 	
+	
+	//Cada que se presiona una tecla 
 	temp=document.getElementsByTagName("body");
 	temp[0].addEventListener("keydown",handleKeyDown,false);
 	
@@ -30,6 +42,7 @@ window.onload=function(){
 	[].forEach.call(tools, function(obj) {
 		obj.draggable = false;
 	});
+	
 };
 
 //**********DRAG EVENTS**************************************//
@@ -370,8 +383,9 @@ function insertAfter(node,reference){
 	if(reference.nextSibling) reference.parentNode.insertBefore(node,reference.nextSibling); 
 	else reference.parentNode.appendChild(node);
 }
-
+var idCounter = 1000000;
 function addEvents(element){
+		element.setAttribute("ID","_3L3M3NTO_P4R4_B0RR4R_" + ++idCounter);
 		element.addEventListener('dblclick', handleDoubleClick, false);
 		element.addEventListener('dragstart', handleDragStartForResize, false);
 		element.addEventListener('dragenter', handleDragEnter, false);
