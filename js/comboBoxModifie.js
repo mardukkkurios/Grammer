@@ -61,26 +61,26 @@ function miFocusTerminoAgregar(){
 	}else{
 	//Cambia su contenido
 		var result = $("#EscribeCssTextbox").val();
-		selector.prev()
-			.text(result)
-			.attr({"title" : result})
-			.css('display', 'block');
-		//nodo de link
-		result = precadena + result;
-		var textNodeLink = jQuery.data(selector.prev()[0],"textNode");
-		if(textNodeLink.nextSibling.nodeValue=="{")//si es ultimo
-			textNodeLink.nodeValue = result;
-		else textNodeLink.nodeValue = result+",";
-		
-		if(textNodeLink.parentNode.firstChild !=textNodeLink){//revisa que no estemos modificando el -1
-			var antTextNode = textNodeLink.previousSibling;//toma el elemento de atras para ponerle la coma
-			if(antTextNode.nodeValue[antTextNode.nodeValue.length-1]!=',')//revisa que SI exista la coma
-				antTextNode.nodeValue = antTextNode.nodeValue + ",";
-		}
-		jQuery.data(selector.parent().parent().parent()[0],"styleSheet").comprimeSelector();
+		cambiaContenidoDelSelector(result, selector.prev());
 	}
 }
-
+function cambiaContenidoDelSelector(newValue, link){
+	link.text(newValue)
+		.attr({"title" : newValue})
+		.css('display', 'block');
+	newValue = precadena + newValue;
+	var textNodeLink = jQuery.data(link[0],"textNode");
+	if(textNodeLink.nextSibling.nodeValue=="{")//si es ultimo
+		textNodeLink.nodeValue = newValue;
+	else textNodeLink.nodeValue = newValue+",";
+	
+	if(textNodeLink.parentNode.firstChild !=textNodeLink){//revisa que no estemos modificando el -1
+		var antTextNode = textNodeLink.previousSibling;//toma el elemento de atras para ponerle la coma
+		if(antTextNode.nodeValue[antTextNode.nodeValue.length-1]!=',')//revisa que SI exista la coma
+			antTextNode.nodeValue = antTextNode.nodeValue + ",";
+	}
+	jQuery.data(link.parent().parent().parent()[0],"styleSheet").comprimeSelector();
+}
 function ocupaCambio(){
 
 	var input = document.getElementById("EscribeCssTextbox");

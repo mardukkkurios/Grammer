@@ -36,7 +36,16 @@ function desapareceInputApareceLink(e){
 							" : "+
 							dad.children().last().children().first().text()+
 							";";
+							
+	var dad = $(this).parent();
+		if(dad.next().next().is("td")){
+			if(isBlank(dad.next().next().children().first().text())){ 
+				event.preventDefault();
+				dad.next().next()[0].click().focus();
+			}
+		}
  }
+ 
  function controlDeTabulacionYEnter(e){
 	if(event.which==13){
 		this.blur();
@@ -160,33 +169,35 @@ $(document).ready(function(){
 		
 		dad.find(".selectorsContainer .izquierdaAbajo").click(clickAddSelector);
 		dad.find(".styleMainContainer .izquierdaAbajo").click(agregaNuevaPropiedadAlFinal);
+		
+		if(lastSeleccionLength == seleccion.length && lastSeleccionLength>0){
+			var divSelector = mainContainer.prev().children().first();
+			for(var i=0; i<lastSeleccionLength; i++){
+				addSelectorToDivSelectors(divSelector, elementsIdSeleccionados[i], false);
+			}
+		}
 	});
 });
 // SELECTORS CONTAINER
 function clickAddSelector(){
-		var selectorContainer = $(this).prev();
-		selectorContainer.append("<a></a>");
-		var link = selectorContainer.children().last();
-		//agregale su nodo de datos
-		var textNode = document.createTextNode("");
-		jQuery.data(link[0],"textNode", textNode);
-		var styleSheet = jQuery.data(selectorContainer.parent().parent()[0],"styleSheet");
-		//alert(selectorContainer.parent().parent().prop('class'));
-		styleSheet.style.insertBefore(textNode, jQuery.data(selectorContainer.parent().next().children().first()[0],"startingKey"));
-		
-		//quite esto ya que evita que el css se vea, tonta coma
-	//	if(textNode.parentNode.firstChild !=textNode){//revisa si hay mas de un elemento
-		//	var antTextNode = textNode.previousSibling;//toma el elemento de atras para ponerle la coma
-			//if(antTextNode.nodeValue[antTextNode.nodeValue.length-1]!=',')//revisa que SI exista la coma
-				//antTextNode.nodeValue = antTextNode.nodeValue + ",";
-		//}
-		//styleSheet.style.appendChild(textNode);
-		
-		//comienza a editarlo
-		link.click(desapareceLinkApareceSelector);
-		link.click();
-		//alert("agrega selector!");
+		addSelectorToDivSelectors($(this).prev(), "", true);
 }
+function addSelectorToDivSelectors(divSelector, value, active){
+	divSelector.append("<a></a>");
+	var link = divSelector.children().last();
+	var textNode = document.createTextNode("");
+	jQuery.data(link[0],"textNode", textNode);
+	var styleSheet = jQuery.data(divSelector.parent().parent()[0],"styleSheet");
+	styleSheet.style.insertBefore(textNode, jQuery.data(divSelector.parent().next().children().first()[0],"startingKey"));
+	link.click(desapareceLinkApareceSelector);
+	if(!isBlank(value)){
+		cambiaContenidoDelSelector(value, link);
+	}else{
+		link[0].click();
+	}
+}
+
+
 function desapareceLinkApareceSelector(){
 		if(last != null){
 			//llama a funcion acabo

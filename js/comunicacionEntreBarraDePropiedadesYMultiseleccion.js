@@ -7,7 +7,7 @@ QUE NOMBRE TAN LARGO !
 var clasesSeleccionadas;
 var tiposDeElementosSeleccionados;	
 var elementsIdSeleccionados;
-
+var lastSeleccionLength=0;
 function llamarCadaVezQueSeAgregueElementoALaSeleccion(){
 	//esta funcion esta siendo llamada cada vez que se agrega algo con shift. -> perdon Ctrl shift no sirve
 	//este ciclo me guarda en rules todas sus regas Css en un formato coprimido y sin repeticiones
@@ -19,16 +19,18 @@ function llamarCadaVezQueSeAgregueElementoALaSeleccion(){
 		for(var j = 0; j<rule.length; j++){
 			if((jQuery.inArray(rule[j].selectorText, rules)) == -1){
 				rules.push(rule[j].selectorText);
+				console.log("Element "+i+", Rule "+j+", "+rule[j].selectorText+"_");
 			}
 		}
 	}
 	//obtener todos los cadSelectorComprimido de los stylesheets complejidad lineal
 	var myOwnRules = [];
+	var myRuleActive = null;
 	var myRuleActive = [];
 	var styles = $(".propertiesContainerForSorting .styleSheetContainer");
 	styles.each(function( index ) {
 		  styleSheet = jQuery.data($(this)[0],"styleSheet");
-		  console.log("myStyles: "+styleSheet.cadSelectorComprimido);
+		  console.log("myStyles "+index+": "+styleSheet.cadSelectorComprimido+"_");
 		  myOwnRules.push(styleSheet.cadSelectorComprimido);
 		  myRuleActive.push(false);
 		});
@@ -39,24 +41,36 @@ function llamarCadaVezQueSeAgregueElementoALaSeleccion(){
 	for(var i=0; i<len; i++){ // por cada rule que me dio el  CSSMatcher
 		for(var j=0; j<len2; j++){
 			if(!myRuleActive[j])
-				if(rules[i]==myOwnRules[j])
+				if(rules[i]===myOwnRules[j])
 					myRuleActive[j]=true;
 		}
 	}
 	//imprime resultados
-	for(var i=0; i<rules.length; i++){
-		if(myRuleActive[i]){
-			$(styles[i]).css('display', 'block');
+	var check = false;
+	for(var j=0; j<len2; j++){
+		if(myRuleActive[j]){
+			$(styles[j]).css('display', 'block');
+			check = true;
 		}else{
-			$(styles[i]).css('display', 'none');
-			//console.log(" "+i+":"+rules[i]);
+			$(styles[j]).css('display', 'none');
+			colectorDeBasura($(styles[j]));
 			}
 		}
-	//}
+		
+	if(check){
+		$(".navigationMenu li a.services")[0].click();
+	}else{ //muestralos todos para que no se vea vacio
+		for(var j=0; j<len2; j++)
+			if($(styles[j]).length)
+				$(styles[j]).css('display', 'block');
+	}
+	//sacales los datos
+	getSelectedElementsInnerData();
+	console.log("/////////////////////////////////////////////");
 }
 //remplazare luego
-/*
-function llamarCadaVezQueSeAgregueElementoALaSeleccion(){
+
+function getSelectedElementsInnerData(){
 	//ya tengo el array en lugar de seleccionado es seleccionados
 	clasesSeleccionadas = null;
 	clasesSeleccionadas = [];
@@ -64,8 +78,9 @@ function llamarCadaVezQueSeAgregueElementoALaSeleccion(){
 	elementsIdSeleccionados = [];
 	tiposDeElementosSeleccionados = null;
 	tiposDeElementosSeleccionados = [];
+	lastSeleccionLength = seleccion.length;
 	for(var i=0; i<seleccion.length; i++){
-		console.log(window.getMatchedCSSRules(seleccion[i]));
+		//console.log(window.getMatchedCSSRules(seleccion[i]));
 		
 		if( seleccion[i].className != "" ){
 			var clasesSeleccionadasInternas = seleccion[i].className;
@@ -104,42 +119,19 @@ function llamarCadaVezQueSeAgregueElementoALaSeleccion(){
 		}
 		
 	}
-	reordenarBarraDePropiedadesPorSeleccion();
 }
-*/
-function reordenarBarraDePropiedadesPorSeleccion(){
-	return;
-	var styles = $(".propertiesContainerForSorting .styleSheetContainer");
-	//console.log("buajajaja");
-	styles.each(function( index ) {
-		  styleSheet = jQuery.data($(this)[0],"styleSheet");
-		  var array = styleSheet.getSelectorsArray();
-		  // si en alguno de los elementos de array (selectores de style) encontramos
-			// algun elemento de los 3 arrays que construi
-			var check = false;
-			for(var i=0; !check && i<elementsIdSeleccionados.length; i++){
-				//console.log(elementsIdSeleccionados[i]);
-			}
-			if(check==false)
-			for(var i=0; !check && i<clasesSeleccionadas.length; i++){
-				//console.log(clasesSeleccionadas[i]);
-			}
-			if(check==false)
-			for(var i=0; !check && i<tiposDeElementosSeleccionados.length; i++){
-				//console.log(tiposDeElementosSeleccionados[i]);
-			}
-		});
-	//console.log("buajajaja2");
-	
-	//console.log("/****DATOS AQUI ABAJO*******************/");
-	for(var i=0; i<elementsIdSeleccionados.length; i++){
-		//console.log(elementsIdSeleccionados[i]);
+
+
+function colectorDeBasura(estilo){
+	if(estilo.length==0) return;
+	var selectores = estilo.children().first().children().first().children("a");
+	if(selectores.length > 0){
+		//continua 
+		var propiedades = estilo.find("table.styleRule tbody").children();
+		if(propiedades.length > 0) return;
 	}
-	for(var i=0; i<clasesSeleccionadas.length; i++){
-		//console.log(clasesSeleccionadas[i]);
-	}
-	for(var i=0; i<tiposDeElementosSeleccionados.length; i++){
-		//console.log(tiposDeElementosSeleccionados[i]);
-	}
-	//console.log("///////////////////////////////////////////////////");
+	//borralo !!!!!
+	var styleSheet = jQuery.data(estilo[0],"styleSheet");
+	document.getElementsByTagName('head')[0].removeChild(styleSheet.style);
+	estilo.remove();
 }
