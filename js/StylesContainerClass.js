@@ -19,6 +19,60 @@ function propertiesContainerData(myContainer){
 	this.style.type = 'text/css';
 	this.style.innerHTML = '';
 	document.getElementsByTagName('head')[0].appendChild(this.style);
+	this.cadSelectorComprimido = "";
+	
+	
+	this.comprimeSelector = comprimeSelector;
+	function comprimeSelector(){
+		var cad = this.style.innerHTML;
+		var llave = cad.indexOf("{");
+		if(llave==-1){
+			this.cadSelectorComprimido = "";
+			return;
+		}
+		cad = cad.substring(0, llave).toLowerCase();
+		//comiienza proceso de compresion
+		var newcad = "";
+		var len = cad.length;
+		var check = false;
+		for(var i = 0; i<len; i++){
+			if(cad[i]==' '){
+				if(check==true){
+					newcad += cad[i];
+				}
+				check=false;
+			}else{
+				
+				if(cad[i]==','){ 
+					if(newcad[newcad.length-1]==' '){
+						newcad[newcad.length-1] = ',';
+					}else{
+						newcad+=',';
+					}
+					newcad+=' ';
+					check=false;
+				}else{
+					check=true;
+					newcad += cad[i];
+				}
+			}
+		}
+		this.cadSelectorComprimido = newcad;
+	}
+	
+	/* //esto funciona bien pero no lo he ocupado hasta ahora. Esta en lista de posibles a borrar
+	this.getSelectorsArray = getSelectorsArray;
+	function getSelectorsArray(){
+		var result = [];
+		var selectores = $(this.propertiesContainer).find(".selectors>a");
+		//console.log("···································");
+		selectores.each(function( index ) {
+		  //console.log( index + ": " + $( this ).text() );
+		  result.push($( this ).text());
+		});
+		//console.log("···································");
+		return result
+	}*/
 	this.toString = toString;
 	function toString(){
 		 result = "";

@@ -77,6 +77,7 @@ function miFocusTerminoAgregar(){
 			if(antTextNode.nodeValue[antTextNode.nodeValue.length-1]!=',')//revisa que SI exista la coma
 				antTextNode.nodeValue = antTextNode.nodeValue + ",";
 		}
+		jQuery.data(selector.parent().parent().parent()[0],"styleSheet").comprimeSelector();
 	}
 }
 
