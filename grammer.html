@@ -1,26 +1,56 @@
 <html>
 <head>
+	<title>Grammer 1.0</title>
 	<meta charset="utf-8" />
-	<link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+	<meta name="application-name" content="Grammer 1.0">
+	<meta name="author" content="Lic & Cris">
+	
 	<link href="css/import.css" rel="stylesheet" type="text/css">
-	<script src="js/edition.js" type="text/javascript"></script>
-	<script src="js/jszip.js"></script>
-	<script src="js/edition.js" type="text/javascript"></script>
+	
 	<script src="js/jquery-1.9.1.js"></script>
 	<script src="js/jquery-ui-1.10.3.custom.js"></script>
-    <script src="js/download.js"></script>
+	<script src="js/jszip.js"></script>
+	<script src="js/helpers.js"></script>
+	<script src="js/elements.js" type="text/javascript"></script>
+	<script src="js/configuration.js"></script>
+    <script src="js/download.js" type="text/javascript"></script>
+	<script src="js/edition.js" type="text/javascript"></script>
 	<script src="js/paleta.js"></script>
-	<link rel="stylesheet" type="text/css" href="css/comboBoxStyle.css" 		/>
-	<link rel="stylesheet" type="text/css" href="css/comboBoxMainStyle.css"	/>
+	<script src="js/interfazDeObjetos.js"></script>
+	<script src="js/generator.js"></script>
 	<script src="js/barraDePropiedades.js"></script>
+	<script src="js/stylesContainerClass.js"></script>
 	
     <script src="js/comboBoxScript.js" type="text/javascript"></script>
     <script src="js/comboBoxModifie.js"></script>
-	
-	<script src="js/stylesContainerClass.js"></script>
-	
+
 </head>
-<body class="bodyPrincipal">
++<body class="bodyPrincipal">
+	<div id="attrModificatorContainer">
+		<div id="attrModificator">
+			<div id="attrModificatorChange"></div>
+			<p>
+				<input type="button" class="cancel" value="Cancelar"/>
+				<input type="button" class="Ok" value="Listo"/>			
+			</p>
+		</div>
+	</div>
+	<div id="documentConfiguration">
+		<form>
+			<header>
+				<h2>Informacion de proyecto</h2>
+			</header>
+			<p id="title"><label>Titulo del proyecto</label><input type="text" size="60"></p>
+			<p id="author"><label>Autor</label><input type="text" size="60"></p>
+			<p id="description"><label>Descripcion</label><input type="text" size="60"></p>
+			<p id="keywords"><label>Palabras clave</label><input type="text" size="60"></p>
+			<p id="charset"><label>Charset</label><input type="text" size="60"></p>
+			<p>
+				<input type="button" class="cancel" value="Cancelar"/>
+				<input type="button" class="Ok" value="Listo"/>
+			</p>
+		</form>
+	</div>
 	<div id="interfazDeEdicion">
 	</div>
 	<div class="tools">
@@ -30,14 +60,15 @@
 		  <button class="prev" type="button"></button>
 	</div>
 	</div>
-		<div id="grammerDevelopmentAppContainer">
+	<div id="grammerDevelopmentAppContainer">
 	  <div class="rightSidebar">
-	  <div class="buttonsContainer">
+		<div class="barContainer">
+			<div class="buttonsContainer">
 				<button class="pin"></button>
 				<ul class="navigationMenu">
 					<li>
 						<a class="home" href="#">
-							<span>Home</span>
+							<span>Paleta</span>
 						</a>
 					</li>
 					
@@ -66,35 +97,20 @@
 					</li>
 				</ul>
 		</div>
-		<div class="barContainer">
-			<div class="paletteContainer">
-				<div class="ContenedorAzulFuerte">hola</div>
-				<div class="ContenedorAzulClaro"></div>
-				<p >Arrastrame !!</p>
-				<a>Google Arrastrable</a>
-                <div class="ContenedorAzulFuerte">hola</div>
-				<div class="ContenedorAzulClaro"></div>
-				<p >Arrastrame !!</p>
-				<a>Google Arrastrable</a>
-			</div>
-			<div class="propertiesContainer">
-				<div class="propertiesMenu">
-					<input type="image" src="img/styleSheetPlus.png" title="Agregar Hoja de Estilo"/>
-				</div>
-				<div class="propertiesContainerForSorting">
+			<div class="paletteContainer" id="interfazDeObjetos">
 				
-				</div>
-				<div id="ui-widget-Su-Id" class="ui-widget">
+			</div>
+			<div class="propertiesContainer">			
+				<div class="ui-widget">
 				  <select id="combobox">
 				  </select>
-				</div>		
+				</div>
 			</div>
 			<div class="moreStuffContainer">
-				Animate this element's margin-left style property
+				Animate this element's margin-left style property djdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjd
 			</div>
 		</div>
-		
 	  </div>
-	  <h1 id="message"></h1>
+	</div>  
 </body>
 </html>

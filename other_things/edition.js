@@ -3,14 +3,10 @@ var dragSrcEl = null;
 var dragOrigin = 0;
 var seleccion = new Array();
 var clipboard= new Array();
-var idCounter = 1000000;
 
-//**********ONLOAD**********************************//
+//**********ONLOAD FUNCTION**********************************//
 $(document).ready(function(){	
 	temp = document.getElementById("interfazDeEdicion");
-	var secondBody=document.createElement("body");
-	temp.appendChild(secondBody);
-	temp = secondBody;
 	temp.addEventListener('dragenter', handleDragEnter, false);
 	temp.addEventListener('dragover', handleDragOver, false);
 	temp.addEventListener('dragleave', handleDragLeave, false);
@@ -81,35 +77,47 @@ function handleDragEnd(e){
 
 ////********Resize and Move********////
 function handleDragEndForResize(e){
-	var newWidth;
-	var newHeight;
+	var newPaddingX;
+	var newPaddingY;
+	var oldPaddingLeft   = isNaN(parseInt(this.style.paddingLeft))?0:parseInt(this.style.paddingLeft);
+	var oldPaddingRight  = isNaN(parseInt(this.style.paddingRight))?0:parseInt(this.style.paddingRight);
+	var oldPaddingTop    = isNaN(parseInt(this.style.paddingTop))?0:parseInt(this.style.paddingTop);
+	var oldPaddingBottom = isNaN(parseInt(this.style.paddingBottom))?0:parseInt(this.style.paddingBottom);
 	switch(dragOrigin){
-		case 1: newWidth=$(this).width()-parseInt(e.offsetX);
-				newHeight=$(this).height()-parseInt(e.offsetY);
+		case 1: newPaddingX=oldPaddingLeft-parseInt(e.offsetX)+"px";
+				this.style.paddingLeft=parseInt(newPaddingX)<0?"0px":newPaddingX;
+				newPaddingY=oldPaddingTop-parseInt(e.offsetY)+"px";
+				this.style.paddingTop=parseInt(newPaddingY)<0?"0px":newPaddingY;
 				break;
-		case 2:	newHeight=$(this).height()-parseInt(e.offsetY);
+		case 2:	newPaddingY=oldPaddingTop-parseInt(e.offsetY)+"px";
+				this.style.paddingTop=parseInt(newPaddingY)<0?"0px":newPaddingY;
 				break;
-		case 3:	newWidth=$(this).width()+(parseInt(e.offsetX)-parseInt(this.offsetWidth));
-				newHeight=$(this).height()-parseInt(e.offsetY);
+		case 3:	newPaddingX=oldPaddingRight+(parseInt(e.offsetX)-parseInt(this.offsetWidth))+"px";
+				this.style.paddingRight=parseInt(newPaddingX)<0?"0px":newPaddingX;
+				newPaddingY=oldPaddingTop-parseInt(e.offsetY)+"px";
+				this.style.paddingTop=parseInt(newPaddingY)<0?"0px":newPaddingY;
 				break;
-		case 4:	newWidth=$(this).width()-parseInt(e.offsetX);
+		case 4:	newPaddingX=oldPaddingLeft-parseInt(e.offsetX)+"px";
+				this.style.paddingLeft=parseInt(newPaddingX)<0?"0px":newPaddingX;
 				break;
 		case 5:	break;
-		case 6:	newWidth=$(this).width()+(parseInt(e.offsetX)-parseInt(this.offsetWidth));
+		case 6:	newPaddingX=oldPaddingRight+(parseInt(e.offsetX)-parseInt(this.offsetWidth))+"px";
+				this.style.paddingRight=parseInt(newPaddingX)<0?"0px":newPaddingX;
 				break;
-		case 7:	newWidth=$(this).width()-parseInt(e.offsetX);
-				newHeight=$(this).height()+(parseInt(e.offsetY)-parseInt(this.offsetHeight));
+		case 7:	newPaddingX=oldPaddingLeft-parseInt(e.offsetX)+"px";
+				this.style.paddingLeft=parseInt(newPaddingX)<0?"0px":newPaddingX;
+				newPaddingY=oldPaddingBottom+(parseInt(e.offsetY)-parseInt(this.offsetHeight))+"px";
+				this.style.paddingBottom=parseInt(newPaddingY)<0?"0px":newPaddingY;
 				break;
-		case 8: newHeight=$(this).height()+(parseInt(e.offsetY)-parseInt(this.offsetHeight));
+		case 8: newPaddingY=oldPaddingBottom+(parseInt(e.offsetY)-parseInt(this.offsetHeight))+"px";
+				this.style.paddingBottom=parseInt(newPaddingY)<0?"0px":newPaddingY;
 				break;
-		case 9:	newWidth=$(this).width()+(parseInt(e.offsetX)-parseInt(this.offsetWidth));
-				newHeight=$(this).height()+(parseInt(e.offsetY)-parseInt(this.offsetHeight));
+		case 9:	newPaddingX=oldPaddingRight+(parseInt(e.offsetX)-parseInt(this.offsetWidth))+"px";
+				this.style.paddingRight=parseInt(newPaddingX)<0?"0px":newPaddingX;
+				newPaddingY=oldPaddingBottom+(parseInt(e.offsetY)-parseInt(this.offsetHeight))+"px";
+				this.style.paddingBottom=parseInt(newPaddingY)<0?"0px":newPaddingY;
 				break;
 	}
-	newWidth=parseInt(newWidth)<0?0:newWidth;
-	newHeight=parseInt(newHeight)<0?0:newHeight;
-	$(this).width(newWidth);
-	$(this).height(newHeight);
 	dragOrigin=0;
 	this.style.opacity = '1.0';
 	return false;
@@ -190,35 +198,47 @@ function handleDropForMove(e){
 
 ////********Inputs and Images********////
 function handleDragEndForResizeInput(e){
-	var newWidth;
-	var newHeight;
+	var newPaddingX;
+	var newPaddingY;
+	var oldPaddingLeft   = isNaN(parseInt(this.style.paddingLeft))?0:parseInt(this.style.paddingLeft);
+	var oldPaddingRight  = isNaN(parseInt(this.style.paddingRight))?0:parseInt(this.style.paddingRight);
+	var oldPaddingTop    = isNaN(parseInt(this.style.paddingTop))?0:parseInt(this.style.paddingTop);
+	var oldPaddingBottom = isNaN(parseInt(this.style.paddingBottom))?0:parseInt(this.style.paddingBottom);
 	switch(dragOrigin){
-		case 1: newWidth=$(this.firstChild).width()-parseInt(e.offsetX);
-				newHeight=$(this.firstChild).height()-parseInt(e.offsetY);
+		case 1: newPaddingX=oldPaddingLeft-parseInt(e.offsetX)+"px";
+				this.firstChild.style.paddingLeft=parseInt(newPaddingX)<0?"0px":newPaddingX;
+				newPaddingY=oldPaddingTop-parseInt(e.offsetY)+"px";
+				this.firstChild.style.paddingTop=parseInt(newPaddingY)<0?"0px":newPaddingY;
 				break;
-		case 2:	newHeight=$(this.firstChild).height()-parseInt(e.offsetY);
+		case 2:	newPaddingY=oldPaddingTop-parseInt(e.offsetY)+"px";
+				this.firstChild.style.paddingTop=parseInt(newPaddingY)<0?"0px":newPaddingY;
 				break;
-		case 3:	newWidth=$(this.firstChild).width()+(parseInt(e.offsetX)-parseInt(this.offsetWidth));
-				newHeight=$(this.firstChild).height()-parseInt(e.offsetY);
+		case 3:	newPaddingX=oldPaddingRight+(parseInt(e.offsetX)-parseInt(this.offsetWidth))+"px";
+				this.firstChild.style.paddingRight=parseInt(newPaddingX)<0?"0px":newPaddingX;
+				newPaddingY=oldPaddingTop-parseInt(e.offsetY)+"px";
+				this.firstChild.style.paddingTop=parseInt(newPaddingY)<0?"0px":newPaddingY;
 				break;
-		case 4:	newWidth=$(this.firstChild).width()-parseInt(e.offsetX);
+		case 4:	newPaddingX=oldPaddingLeft-parseInt(e.offsetX)+"px";
+				this.firstChild.style.paddingLeft=parseInt(newPaddingX)<0?"0px":newPaddingX;
 				break;
 		case 5:	break;
-		case 6:	newWidth=$(this.firstChild).width()+(parseInt(e.offsetX)-parseInt(this.offsetWidth));
+		case 6:	newPaddingX=oldPaddingRight+(parseInt(e.offsetX)-parseInt(this.offsetWidth))+"px";
+				this.firstChild.style.paddingRight=parseInt(newPaddingX)<0?"0px":newPaddingX;
 				break;
-		case 7:	newWidth=$(this.firstChild).width()-parseInt(e.offsetX);
-				newHeight=$(this.firstChild).height()+(parseInt(e.offsetY)-parseInt(this.offsetHeight));
+		case 7:	newPaddingX=oldPaddingLeft-parseInt(e.offsetX)+"px";
+				this.firstChild.style.paddingLeft=parseInt(newPaddingX)<0?"0px":newPaddingX;
+				newPaddingY=oldPaddingBottom+(parseInt(e.offsetY)-parseInt(this.offsetHeight))+"px";
+				this.firstChild.style.paddingBottom=parseInt(newPaddingY)<0?"0px":newPaddingY;
 				break;
-		case 8: newHeight=$(this.firstChild).height()+(parseInt(e.offsetY)-parseInt(this.offsetHeight));
+		case 8: newPaddingY=oldPaddingBottom+(parseInt(e.offsetY)-parseInt(this.offsetHeight))+"px";
+				this.firstChild.style.paddingBottom=parseInt(newPaddingY)<0?"0px":newPaddingY;
 				break;
-		case 9:	newWidth=$(this.firstChild).width()+(parseInt(e.offsetX)-parseInt(this.offsetWidth));
-				newHeight=$(this.firstChild).height()+(parseInt(e.offsetY)-parseInt(this.offsetHeight));
+		case 9:	newPaddingX=oldPaddingRight+(parseInt(e.offsetX)-parseInt(this.offsetWidth))+"px";
+				this.firstChild.style.paddingRight=parseInt(newPaddingX)<0?"0px":newPaddingX;
+				newPaddingY=oldPaddingBottom+(parseInt(e.offsetY)-parseInt(this.offsetHeight))+"px";
+				this.firstChild.style.paddingBottom=parseInt(newPaddingY)<0?"0px":newPaddingY;
 				break;
 	}
-	newWidth=parseInt(newWidth)<0?0:newWidth;
-	newHeight=parseInt(newHeight)<0?0:newHeight;
-	$(this.firstChild).width(newWidth);
-	$(this.firstChild).height(newHeight);
 	dragOrigin=0;
 	this.style.opacity = '1.0';
 	return false;
@@ -273,50 +293,44 @@ function handleClick(e){
 }
 
 function handleDoubleClick(e){
-	e.preventDefault();
-	$("#attrModificatorChange").html(elementoPorTag(this).helper.content);
-	$("#attrModificator").css("top",e.clientY);
-	$("#attrModificator").css("left",e.clientX);
-	$("#attrModificatorContainer").fadeIn(100);
-	elementoPorTag(this).helper.managment(this);
-	// var tdesc;
-	// if(e.ctrlKey==true){//revisamos si esta o no la tecla control presionada
-		// if(seleccion.indexOf(this)==-1){//si lo esta revisamos si el elemento clickeado esta actualmente entre los elementos seleccionados
-			// seleccion.push(this);    //si no lo esta se agrega a la seleccion y se le agrega la clase css "seleccionado"
-			// this.classList.add("seleccionado");//y se agregan todos los desce
-			// tdesc=this.querySelectorAll('*');
-			// [].forEach.call(tdesc,function(obj){
-				// if(seleccion.indexOf(obj)==-1 && obj.tagName!="INPUT" && obj.tagName!="IMG" && !obj.classList.contains("divInputHelp")){
-					// seleccion.push(obj);
-					// obj.classList.add("seleccionado");
-				// }
-			// });
-		// }else{//si ya lo esta se saca de la seleccion y se le quita la clase css
-			// seleccion.splice(seleccion.indexOf(this),1);//recomendado http://www.w3schools.com/jsref/jsref_splice.asp
-			// this.classList.remove("seleccionado");
-			// tdesc=this.querySelectorAll('*');
-			// [].forEach.call(tdesc,function(obj){
-				// if(seleccion.indexOf(obj)!=-1){
-					// seleccion.splice(seleccion.indexOf(obj),1);
-					// obj.classList.remove("seleccionado");
-				// }
-			// });
-		// }
-	// }else{
-		// var temp=document.getElementsByTagName("*");//si se hace click sin ctrl entonces se limpia toda la seleccion
-		// //y a todos los elementos se les retira la clase "seleccionado"
-		// for(var i=0;i<temp.length;i++) temp[i].classList.remove("seleccionado");
-		// seleccion=new Array();//luego se agrega el elemento clickeado a la selecion y se le agrega la clase
-		// seleccion.push(this);
-		// this.classList.add("seleccionado");
-		// tdesc=this.querySelectorAll('*');
-		// [].forEach.call(tdesc,function(obj){
-			// if(obj.tagName!="INPUT" && obj.tagName!="IMG" && !obj.classList.contains("divInputHelp")){
-				// seleccion.push(obj);
-				// obj.classList.add("seleccionado");
-			// }
-		// });
-	// }
+	var tdesc;
+	if(e.ctrlKey==true){//revisamos si esta o no la tecla control presionada
+		if(seleccion.indexOf(this)==-1){//si lo esta revisamos si el elemento clickeado esta actualmente entre los elementos seleccionados
+			seleccion.push(this);    //si no lo esta se agrega a la seleccion y se le agrega la clase css "seleccionado"
+			this.classList.add("seleccionado");//y se agregan todos los desce
+			tdesc=this.querySelectorAll('*');
+			[].forEach.call(tdesc,function(obj){
+				if(seleccion.indexOf(obj)==-1 && obj.tagName!="INPUT" && obj.tagName!="IMG" && !obj.classList.contains("divInputHelp")){
+					seleccion.push(obj);
+					obj.classList.add("seleccionado");
+				}
+			});
+		}else{//si ya lo esta se saca de la seleccion y se le quita la clase css
+			seleccion.splice(seleccion.indexOf(this),1);//recomendado http://www.w3schools.com/jsref/jsref_splice.asp
+			this.classList.remove("seleccionado");
+			tdesc=this.querySelectorAll('*');
+			[].forEach.call(tdesc,function(obj){
+				if(seleccion.indexOf(obj)!=-1){
+					seleccion.splice(seleccion.indexOf(obj),1);
+					obj.classList.remove("seleccionado");
+				}
+			});
+		}
+	}else{
+		var temp=document.getElementsByTagName("*");//si se hace click sin ctrl entonces se limpia toda la seleccion
+		//y a todos los elementos se les retira la clase "seleccionado"
+		for(var i=0;i<temp.length;i++) temp[i].classList.remove("seleccionado");
+		seleccion=new Array();//luego se agrega el elemento clickeado a la selecion y se le agrega la clase
+		seleccion.push(this);
+		this.classList.add("seleccionado");
+		tdesc=this.querySelectorAll('*');
+		[].forEach.call(tdesc,function(obj){
+			if(obj.tagName!="INPUT" && obj.tagName!="IMG" && !obj.classList.contains("divInputHelp")){
+				seleccion.push(obj);
+				obj.classList.add("seleccionado");
+			}
+		});
+	}
 	e.stopPropagation();
 }
 
@@ -442,6 +456,7 @@ function addEvents(element,deep){
 	deep=deep||false;
 	var input=false;
 	if(element.tagName=="INPUT" || element.tagName=="IMG"){
+	alert("");
 		var inputDiv=document.createElement("div");
 		var inputHelpDiv=document.createElement("div");
 		insertAfter(inputDiv,element);
@@ -452,7 +467,6 @@ function addEvents(element,deep){
 		inputHelpDiv.classList.add("divInputHelp");
 		input=true;
 	}
-	element.setAttribute("ID","_3L3M3NTO_P4R4_B0RR4R_" + ++idCounter);
 	element.addEventListener('dblclick', handleDoubleClick, false);
 	element.addEventListener('dragstart', handleDragStartForResize, false);
 	element.addEventListener('dragenter', handleDragEnter, false);

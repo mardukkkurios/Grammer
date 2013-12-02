@@ -1,4 +1,4 @@
-body  .bodyPrincipal{
+body .bodyPrincipal{
 	font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
 	font-size: 62.5%;
 	width: auto;
@@ -15,10 +15,19 @@ body  .bodyPrincipal{
 	min-height:100%;
 } 
  
-.over {
-	/*border: 2px dashed #000;*/
-}
- 
 .seleccionado{
-	background-color:red !important; 
+	outline: #949494 thin dashed !important; 
 } 
+
+.divInput{
+    display:inline-block;
+	position: relative;
+}
+
+.divInputHelp{
+    position:absolute; 
+	left:10%;
+	right:10%; 
+	top:10%;
+	bottom:10%;
+}

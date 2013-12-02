@@ -2,4 +2,12 @@
 @import url("prefabs.css");
 @import url("tools.css");
 @import url("paleta.css");
+@import url("interfazDeObjetos.css");
+@import url("configuration.css");
+@import url("helpers.css");
 @import url("barraDePropiedades.css");
+
+@import url("comboBoxStyle.css");
+@import url("comboBoxMainStyle.css");
+
+@import url("smoothness/jquery-ui-1.10.3.custom.css");

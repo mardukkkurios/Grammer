@@ -22,6 +22,7 @@
 
 
 /*******************************************/
+
 .rightSidebar{
 /*Posicionamiento*/
 	
@@ -46,10 +47,11 @@
 	-webkit-transition-delay:0s;
 	
 }
+
 .paletteContainer{ display:block; }
 .propertiesContainer{ display:none; }
 .moreStuffContainer{ display:none; }
-	
+
 .pin{
 	background: url('../img/Pin-icon.png') no-repeat;
 	background-position:0 0;

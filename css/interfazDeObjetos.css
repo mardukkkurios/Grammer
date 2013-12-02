@@ -1,0 +1,17 @@
+#interfazDeObjetos img{
+	margin: 10px;
+vertical-align:	middle;
+}
+
+#interfazDeObjetos span{
+	vertical-align:	middle;
+}
+
+#interfazDeObjetos{
+	font-size:1.5em;
+}
+
+#interfazDeObjetos details summary:hover, #interfazDeObjetos div:hover{
+	background:#707c91;
+	cursor:pointer;
+}

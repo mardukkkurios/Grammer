@@ -1,0 +1,54 @@
+#documentConfiguration{
+   position: fixed;
+   font-size: 1.5em;
+  font-family: Arial, Helvetica, sans-serif;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 99999;
+  opacity:1;
+  -webkit-transition: display 400ms ease-in;
+  transition: display 400ms ease-in;
+  display:none;
+}
+
+#documentConfiguration  form {
+  width: 40%;
+  position: relative;
+  margin: 15% auto;
+  padding: 5px 20px 5px 20px;
+  border-radius: 10px;
+  background: -webkit-linear-gradient(#fff, #999);
+ }
+ 
+ #documentConfiguration  form  input[type=text]{
+  float:right;
+ }
+ 
+ #documentConfiguration  form  input.cancel,#documentConfiguration  form  input.Ok{
+  background:#4d5e72;
+  border: none;
+  border-radius:3px;
+  color: white;
+ }
+ 
+ #documentConfiguration  form  input.Ok{
+  font-size:1.5em;
+  vertical-align:top;
+ }
+
+ #documentConfiguration p:last-child {
+	text-align:right;
+ }
+ 
+ #documentConfiguration  header{
+  text-align:right;
+  background:url("../img/config_ico.png") no-repeat right;
+ }
+ 
+ #documentConfiguration  header h2{
+  position: relative;
+  right: 30px;
+ }

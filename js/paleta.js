@@ -41,8 +41,8 @@ $(document).ready(function() {
 	
 	switch ($(this).attr('class')){
 		case 'home':
-			$(".barContainer").css("background-color", "#83CF86");
-			$(".buttonsContainer").css("background-color", "#2E9B2E");
+			$(".barContainer").css("background-color", "");
+			$(".buttonsContainer").css("background-color", "");
 			$(".rightSidebar").css("background", "-webkit-linear-gradient(rgba(31, 255, 0, 0.47), rgba(0, 253, 81, 0.43))");
 			
 			$(".paletteContainer").css('display','block');

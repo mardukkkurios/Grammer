@@ -45,7 +45,8 @@
 }
 
 .tools button.conf {
-  background:url('../img/setup.png') no-repeat;
+  /*background:url('../img/setup.png') no-repeat;*/
+  background:url('../img/config.png') no-repeat;
   -webkit-transform-origin: -52px 50px;
   -moz-transform-origin: -52px 50px;
   -o-transform-origin: -52px 50px;
@@ -56,7 +57,8 @@
 }
 
 .tools button.download {
-  background:url('../img/descarga.png') no-repeat;
+  /*background:url('../img/descarga.png') no-repeat;*/
+  background:url('../img/descargar1.png') no-repeat;
   -webkit-transform-origin: -100px -100px;
   -moz-transform-origin: -100px -100px;
   -o-transform-origin: -100px -100px;
@@ -67,7 +69,8 @@
 }
 
 .tools button.prev {
-  background:url('../img/preview.png') no-repeat;
+  /*background:url('../img/preview.png') no-repeat;*/
+  background:url('../img/preview2.png') no-repeat;
   -webkit-transform-origin: 0px -140px;
   -moz-transform-origin: 0px -140px;
   -o-transform-origin: 0px -140px;
