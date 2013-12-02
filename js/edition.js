@@ -33,7 +33,6 @@ function handleDragStart(e){
 
 function handleDragOver(e){
 	e.preventDefault(); // Necessary. Allows us to drop.
-	if(dragSrcEl!=null) this.classList.add('over');
 	return false;
 }
 
@@ -268,7 +267,8 @@ function handleClick(e){
 		seleccion=new Array();//luego se agrega el elemento clickeado a la selecion y se le agrega la clase
 		seleccion.push(this);
 		this.classList.add("seleccionado");
-	}		
+	}	
+	llamarCadaVezQueSeAgregueElementoALaSeleccion();
 	e.stopPropagation();
 }
 
@@ -325,6 +325,7 @@ function handleClickForCleanSelection(e){
 		var temp=document.getElementsByTagName("*");
 		for(var i=0;i<temp.length;i++) temp[i].classList.remove("seleccionado");
 		seleccion=new Array();
+		llamarCadaVezQueSeAgregueElementoALaSeleccion();
 	}
 }
 
@@ -375,6 +376,7 @@ function handleKeyDownForShortcuts(e){
 							seleccion.push(des);
 						}
 					});
+					llamarCadaVezQueSeAgregueElementoALaSeleccion();
 					break;
 			//Ctrl+Shift+V
 			case 86:if(seleccion.length==0){
