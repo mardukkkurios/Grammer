@@ -15,7 +15,7 @@ var elementos=[
 	},
 	{
 		"tag":"P",
-		"HTMLContent":"<p>parrafo</p>",
+		"HTMLContent":"<p class=\"containerStart\">parrafo</p>",
 		"presentationInfo":	{
 			"Label":"parrafo",
 			"img":"/img/paleta/parrafo.png"
@@ -23,7 +23,7 @@ var elementos=[
 		"category":"Basicos",
 		"helper":{
 			"content":"<textarea rows=\"5\" cols=\"40\" placeholder=\"Escriba aqui el contenido de su parrafo\"></textarea>",
-			"managment":function(e){helperParagraph(e)},
+			"managment":function(e){helperLabel(e)},
 		}
 	},
 	{

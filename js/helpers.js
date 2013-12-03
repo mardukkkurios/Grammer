@@ -1,3 +1,5 @@
+var helperClass;
+
 $(document).ready(function(){
 	$("#attrModificatorContainer").click(function(){
 		$("#attrModificatorContainer").fadeOut(100);
@@ -16,7 +18,17 @@ function helperGenericInput(caller){
 	$("#attrModificator .Ok").on("click",function(event){
 		$(caller).find("input").val($("#attrModificatorChange input").val());
 		$(caller).find("input").attr("value",$("#attrModificatorChange input").val());
-		if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+		if(idChange(caller)){
+		    var clases=getSelectorDeClasesValue();
+			while(clases.lastIndexOf(".")!=-1){
+				clases=clases.replace(".","");
+			}
+			while(clases.lastIndexOf(",")!=-1){
+				clases=clases.replace(",","");
+			}
+			caller.className=clases+" "+helperClass;
+			$("#attrModificatorContainer").fadeOut(100);
+		}
 		event.stopPropagation();
 	});
 }
@@ -28,7 +40,17 @@ function helperButton(caller){
 		$(caller).find("input").val($("#attrModificatorChange textarea").val());
 		if($("#attrModificatorChange textarea").val()=="") $(caller).find("input").removeAttr("value")
 		else $(caller).find("input").attr("value",$("#attrModificatorChange textarea").val());
-		if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+		if(idChange(caller)){
+		    var clases=getSelectorDeClasesValue();
+			while(clases.lastIndexOf(".")!=-1){
+				clases=clases.replace(".","");
+			}
+			while(clases.lastIndexOf(",")!=-1){
+				clases=clases.replace(",","");
+			}
+			caller.className=clases+" "+helperClass;
+			$("#attrModificatorContainer").fadeOut(100);
+		}
 		event.stopPropagation();
 	});
 	$("#attrModificatorChange textarea").off("keypress");
@@ -36,8 +58,18 @@ function helperButton(caller){
 		if(!event.shiftKey&&event.keyCode==13){
 			$(caller).find("input").val($("#attrModificatorChange textarea").val());
 			if($("#attrModificatorChange textarea").val()=="") $(caller).find("input").removeAttr("value")
-			else $(caller).find("input").attr("value",$("#attrModificatorChange textarea").val());
-		    if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+				else $(caller).find("input").attr("value",$("#attrModificatorChange textarea").val());
+				if(idChange(caller)){
+				var clases=getSelectorDeClasesValue();
+				while(clases.lastIndexOf(".")!=-1){
+					clases=clases.replace(".","");
+				}
+				while(clases.lastIndexOf(",")!=-1){
+					clases=clases.replace(",","");
+				}
+				caller.className=clases+" "+helperClass;
+				$("#attrModificatorContainer").fadeOut(100);
+			}
 		}
 		event.stopPropagation();
 	});
@@ -50,7 +82,17 @@ function helperSwitch(caller){
 	$("#attrModificator .Ok").on("click",function(event){
 		if($("#attrModificatorChange input").prop("checked")) $(caller).find("input").prop("checked","true");
 		else $(caller).find("input").prop("checked",false);
-		if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+		if(idChange(caller)){
+		    var clases=getSelectorDeClasesValue();
+			while(clases.lastIndexOf(".")!=-1){
+				clases=clases.replace(".","");
+			}
+			while(clases.lastIndexOf(",")!=-1){
+				clases=clases.replace(",","");
+			}
+			caller.className=clases+" "+helperClass;
+			$("#attrModificatorContainer").fadeOut(100);
+		}
 		event.stopPropagation();
 	});
 }
@@ -60,14 +102,34 @@ function helperLabel(caller){
 	$("#attrModificator .Ok").off("click");
 	$("#attrModificator .Ok").on("click",function(event){
 		$(caller).text($("#attrModificatorChange textarea").val());
-		if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+		if(idChange(caller)){
+		    var clases=getSelectorDeClasesValue();
+			while(clases.lastIndexOf(".")!=-1){
+				clases=clases.replace(".","");
+			}
+			while(clases.lastIndexOf(",")!=-1){
+				clases=clases.replace(",","");
+			}
+			caller.className=clases+" "+helperClass;
+			$("#attrModificatorContainer").fadeOut(100);
+		}
 		event.stopPropagation();
 	});
 	$("#attrModificatorChange textarea").off("keypress");
 	$("#attrModificatorChange textarea").on("keypress",function(event){
 		if(!event.shiftKey&&event.keyCode==13){
 			$(caller).text($("#attrModificatorChange textarea").val());
-      		if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+      		if(idChange(caller)){
+				var clases=getSelectorDeClasesValue();
+				while(clases.lastIndexOf(".")!=-1){
+					clases=clases.replace(".","");
+				}
+				while(clases.lastIndexOf(",")!=-1){
+					clases=clases.replace(",","");
+				}
+				caller.className=clases+" "+helperClass;
+				$("#attrModificatorContainer").fadeOut(100);
+			}
 		}
 		event.stopPropagation();
 	});
@@ -81,7 +143,17 @@ function helperLink(caller){
 		$(caller).text($("#attrModificatorChange textarea").first().val());
 		if($("#attrModificatorChange textarea").last().val()=="") $(caller).removeAttr("href");
 		else $(caller).attr("href",$("#attrModificatorChange textarea").last().val());
-		if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+		if(idChange(caller)){
+		    var clases=getSelectorDeClasesValue();
+			while(clases.lastIndexOf(".")!=-1){
+				clases=clases.replace(".","");
+			}
+			while(clases.lastIndexOf(",")!=-1){
+				clases=clases.replace(",","");
+			}
+			caller.className=clases+" "+helperClass;
+			$("#attrModificatorContainer").fadeOut(100);
+		}
 		event.stopPropagation();
 	});
 	$("#attrModificatorChange textarea").off("keypress");
@@ -90,7 +162,19 @@ function helperLink(caller){
 			$(caller).text($("#attrModificatorChange textarea").first().val());
 			if($("#attrModificatorChange textarea").last().val()=="") $(caller).removeAttr("href");
 			else $(caller).attr("href",$("#attrModificatorChange textarea").last().val());
-     		if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+     		if($("#attrModificatorChange textarea").val()=="") $(caller).find("input").removeAttr("value")
+				else $(caller).find("input").attr("value",$("#attrModificatorChange textarea").val());
+				if(idChange(caller)){
+				var clases=getSelectorDeClasesValue();
+				while(clases.lastIndexOf(".")!=-1){
+					clases=clases.replace(".","");
+				}
+				while(clases.lastIndexOf(",")!=-1){
+					clases=clases.replace(",","");
+				}
+				caller.className=clases+" "+helperClass;
+				$("#attrModificatorContainer").fadeOut(100);
+			}
 		}
 		event.stopPropagation();
 	});
@@ -104,7 +188,17 @@ function helperForm(caller){
 		else $(caller).attr("action",$("#attrModificatorChange textarea").last().val());
 		if($("#attrModificatorChange :selected").val()=="Ninguno") $(caller).removeAttr("method");
 		else $(caller).attr("method",$("#attrModificatorChange :selected").val());
-		if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+		if(idChange(caller)){
+		    var clases=getSelectorDeClasesValue();
+			while(clases.lastIndexOf(".")!=-1){
+				clases=clases.replace(".","");
+			}
+			while(clases.lastIndexOf(",")!=-1){
+				clases=clases.replace(",","");
+			}
+			caller.className=clases+" "+helperClass;
+			$("#attrModificatorContainer").fadeOut(100);
+		}
 		event.stopPropagation();
 	});
 	$("#attrModificatorChange textarea").off("keypress");
@@ -114,7 +208,19 @@ function helperForm(caller){
 			else $(caller).attr("action",$("#attrModificatorChange textarea").last().val());
 			if($("#attrModificatorChange :selected").val()=="Ninguno") $(caller).removeAttr("method");
 			else $(caller).attr("method",$("#attrModificatorChange :selected").val());
-     		if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+     		if($("#attrModificatorChange textarea").val()=="") $(caller).find("input").removeAttr("value")
+				else $(caller).find("input").attr("value",$("#attrModificatorChange textarea").val());
+				if(idChange(caller)){
+				var clases=getSelectorDeClasesValue();
+				while(clases.lastIndexOf(".")!=-1){
+					clases=clases.replace(".","");
+				}
+				while(clases.lastIndexOf(",")!=-1){
+					clases=clases.replace(",","");
+				}
+				caller.className=clases+" "+helperClass;
+				$("#attrModificatorContainer").fadeOut(100);
+			}
 			event.stopPropagation();
 		}
 		event.stopPropagation();
@@ -129,7 +235,17 @@ function helperText(caller){
 		$(caller).find("input").val($("#attrModificatorChange textarea").first().val());
 		if($("#attrModificatorChange textarea").last().val()=="") $(caller).find("input").removeAttr("placeholder");
 		else $(caller).find("input").attr("placeholder",$("#attrModificatorChange textarea").last().val());
-		if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+		if(idChange(caller)){
+		    var clases=getSelectorDeClasesValue();
+			while(clases.lastIndexOf(".")!=-1){
+				clases=clases.replace(".","");
+			}
+			while(clases.lastIndexOf(",")!=-1){
+				clases=clases.replace(",","");
+			}
+			caller.className=clases+" "+helperClass;
+			$("#attrModificatorContainer").fadeOut(100);
+		}
 		event.stopPropagation();
 	});
 	$("#attrModificatorChange textarea").off("keypress");
@@ -138,7 +254,19 @@ function helperText(caller){
 			$(caller).find("input").val($("#attrModificatorChange textarea").first().val());
 			if($("#attrModificatorChange textarea").last().val()=="") $(caller).find("input").removeAttr("placeholder");
 			else $(caller).find("input").attr("placeholder",$("#attrModificatorChange textarea").last().val());
-     		if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+     		if($("#attrModificatorChange textarea").val()=="") $(caller).find("input").removeAttr("value")
+				else $(caller).find("input").attr("value",$("#attrModificatorChange textarea").val());
+				if(idChange(caller)){
+				var clases=getSelectorDeClasesValue();
+				while(clases.lastIndexOf(".")!=-1){
+					clases=clases.replace(".","");
+				}
+				while(clases.lastIndexOf(",")!=-1){
+					clases=clases.replace(",","");
+				}
+				caller.className=clases+" "+helperClass;
+				$("#attrModificatorContainer").fadeOut(100);
+			}
 		}
 		event.stopPropagation();
 	});
@@ -150,7 +278,17 @@ function helperPsswd(caller){
 	$("#attrModificator .Ok").on("click",function(event){
 		if($("#attrModificatorChange textarea").val()=="") $(caller).find("input").removeAttr("placeholder");
 		else $(caller).find("input").attr("placeholder",$("#attrModificatorChange textarea").val());
-		if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+		if(idChange(caller)){
+		    var clases=getSelectorDeClasesValue();
+			while(clases.lastIndexOf(".")!=-1){
+				clases=clases.replace(".","");
+			}
+			while(clases.lastIndexOf(",")!=-1){
+				clases=clases.replace(",","");
+			}
+			caller.className=clases+" "+helperClass;
+			$("#attrModificatorContainer").fadeOut(100);
+		}
 		event.stopPropagation();
 	});
 	$("#attrModificatorChange textarea").off("keypress");
@@ -158,7 +296,19 @@ function helperPsswd(caller){
 		if(!event.shiftKey&&event.keyCode==13){
 			if($("#attrModificatorChange textarea").val()=="") $(caller).find("input").removeAttr("placeholder");
 			else $(caller).find("input").attr("placeholder",$("#attrModificatorChange textarea").val());
-    		if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+    		if($("#attrModificatorChange textarea").val()=="") $(caller).find("input").removeAttr("value")
+				else $(caller).find("input").attr("value",$("#attrModificatorChange textarea").val());
+				if(idChange(caller)){
+				var clases=getSelectorDeClasesValue();
+				while(clases.lastIndexOf(".")!=-1){
+					clases=clases.replace(".","");
+				}
+				while(clases.lastIndexOf(",")!=-1){
+					clases=clases.replace(",","");
+				}
+				caller.className=clases+" "+helperClass;
+				$("#attrModificatorContainer").fadeOut(100);
+			}
 		}
 		event.stopPropagation();
 	});
@@ -179,7 +329,17 @@ function helperRange(caller){
 		$(caller).find("input").attr("min",$("#attrModificatorChange input:eq(1)").val());
 		$(caller).find("input").attr("max",$("#attrModificatorChange input:eq(2)").val());
 		$(caller).find("input").attr("step",$("#attrModificatorChange input").last().val());
-		if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+		if(idChange(caller)){
+		    var clases=getSelectorDeClasesValue();
+			while(clases.lastIndexOf(".")!=-1){
+				clases=clases.replace(".","");
+			}
+			while(clases.lastIndexOf(",")!=-1){
+				clases=clases.replace(",","");
+			}
+			caller.className=clases+" "+helperClass;
+			$("#attrModificatorContainer").fadeOut(100);
+		}
 		event.stopPropagation();
 	});
 }
@@ -206,7 +366,17 @@ function helperH(caller){
 			caller.setAttribute("id",oldID);
 			$(caller).replaceWith(newNode);
 		}
-		if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+		if(idChange(caller)){
+		    var clases=getSelectorDeClasesValue();
+			while(clases.lastIndexOf(".")!=-1){
+				clases=clases.replace(".","");
+			}
+			while(clases.lastIndexOf(",")!=-1){
+				clases=clases.replace(",","");
+			}
+			caller.className=clases+" "+helperClass;
+			$("#attrModificatorContainer").fadeOut(100);
+		}
 		event.stopPropagation();
 	});
 	$("#attrModificatorChange textarea").off("keypress");
@@ -228,7 +398,19 @@ function helperH(caller){
 				caller.setAttribute("id",oldID);
 				$(caller).replaceWith(newNode);
 			}
-			if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+			if($("#attrModificatorChange textarea").val()=="") $(caller).find("input").removeAttr("value")
+				else $(caller).find("input").attr("value",$("#attrModificatorChange textarea").val());
+				if(idChange(caller)){
+				var clases=getSelectorDeClasesValue();
+				while(clases.lastIndexOf(".")!=-1){
+					clases=clases.replace(".","");
+				}
+				while(clases.lastIndexOf(",")!=-1){
+					clases=clases.replace(",","");
+				}
+				caller.className=clases+" "+helperClass;
+				$("#attrModificatorContainer").fadeOut(100);
+			}
 		}
 		event.stopPropagation();
 	});
@@ -237,7 +419,17 @@ function helperH(caller){
 function helperDiv(caller){
 	$("#attrModificator .Ok").off("click");
 	$("#attrModificator .Ok").on("click",function(event){
-		if(idChange(caller)) $("#attrModificatorContainer").fadeOut(100);
+		if(idChange(caller)){
+		    var clases=getSelectorDeClasesValue();
+			while(clases.lastIndexOf(".")!=-1){
+				clases=clases.replace(".","");
+			}
+			while(clases.lastIndexOf(",")!=-1){
+				clases=clases.replace(",","");
+			}
+			caller.className=clases+" "+helperClass;
+			$("#attrModificatorContainer").fadeOut(100);
+		}
 		event.stopPropagation();
 	});
 }
@@ -255,6 +447,23 @@ function helperID(caller){
 	       $("#attrModificator #newID").attr("placeholder","ID repetido");
 	  }
    });
+   helperClass="";
+   var clases=caller.className.split(" ");
+   if(caller.classList.contains("seleccionado")){
+      helperClass+="seleccionado ";
+	  clases.splice(clases.indexOf("seleccionado"),1);
+   }
+   if(caller.classList.contains("divInput")){
+      helperClass+="divInput ";
+	  clases.splice(clases.indexOf("divInput"),1);
+   }
+   if(caller.classList.contains("containerStart")){
+      helperClass+="containerStart ";
+	  clases.splice(clases.indexOf("containerStart"),1);
+   }
+   clases=clases.join(", .");
+   if(clases.length!=0) clases=".".concat(clases);
+   construirSelectorDeClases(clases);
 }
 
 function idChange(caller){
