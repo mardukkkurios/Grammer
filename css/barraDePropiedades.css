@@ -1,3 +1,29 @@
+.fileContainer {
+font-weight: normal;
+text-decoration:overline;
+font-style: italic;
+font-variant: small-caps;
+color: #000;
+letter-spacing: 1.7pt;
+word-spacing: -1pt;
+font-size: 12px;
+text-align: right;
+font-family: arial, helvetica, sans-serif;
+line-height: 0;
+margin-top: -9px;
+margin-right: 5px;
+}
+.ui-widget{
+font-weight: bold;
+font-style: ;
+color: #000;
+font-size: 12px;
+text-align: right;
+font-family: arial;
+margin-top: -9px;
+margin-right: 5px;
+}
+
 /****PROPERTIES MENU***********************/
 .propertiesMenu{
 height: 40px;
@@ -6,7 +32,7 @@ height: 40px;
 float: right;
 width: 40px;
 height: 40px;
-margin-top: -5px;
+margin-top: -10px;
 margin-right: 5px;
 -webkit-box-shadow: -5px 0px 11px rgba(50, 50, 50, 0.26);
 }
