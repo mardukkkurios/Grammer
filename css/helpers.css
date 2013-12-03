@@ -12,23 +12,32 @@
   transition: display 400ms ease-in;
   display:none;
 }
+
 #attrModificator{
 border-radius:2px;
 position:absolute;
-font-size:1.5em;
+font-size:24px;
 display:inline-block;
 padding:5px;
 background: -webkit-linear-gradient(#fff, #999);
 }
 
-#attrModificator{
-font-size:2em;
+#attrModificator label{
+ font-size:18px;
 }
 
-#attrModificatorChange form  input[type=text]{
+#attrModificator  input:not([type=button]), #attrModificator  textarea, #attrModificator  button,#attrModificator  select{
   float:right;
  }
  
- #attrModificator p:last-child {
-	text-align:right;
- }
+#attrModificator p{
+  margin:5px 0;
+}
+
+#attrModificator>p:nth-child(2){
+   clear: right;
+}
+
+#attrModificator>p:last-child {
+  text-align:right;
+}

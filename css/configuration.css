@@ -1,6 +1,6 @@
 #documentConfiguration{
    position: fixed;
-   font-size: 1.5em;
+   font-size: 18px;
   font-family: Arial, Helvetica, sans-serif;
   top: 0;
   right: 0;
@@ -15,7 +15,7 @@
 }
 
 #documentConfiguration  form {
-  width: 40%;
+  width: 546px;
   position: relative;
   margin: 15% auto;
   padding: 5px 20px 5px 20px;
@@ -35,7 +35,7 @@
  }
  
  #documentConfiguration  form  input.Ok{
-  font-size:1.5em;
+  font-size:27px;
   vertical-align:top;
  }
 

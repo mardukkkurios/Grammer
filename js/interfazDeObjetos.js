@@ -1,6 +1,6 @@
 $(document).ready(function(){
-	[].forEach.call(categorias, function(category){
-		var parent=$("<details></details>");
+	[].forEach.call(categorias, function(category,i){
+		var parent=i==0?$("<details open></details>"):$("<details></details>");
 		parent.append("<summary>"+category+"</summary>");
 		[].forEach.call(elementos, function(elemento) {
 			if(elemento.category==category){
