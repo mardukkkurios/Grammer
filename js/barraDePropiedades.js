@@ -148,9 +148,12 @@ $(document).ready(function(){
 							'<table class = "styleRule"></table>'+
 							'<div class="izquierdaAbajo">}	</div>'+
 						'</div>'+
+						'<div class="fileContainer">'+
+							'<a title="style.css">style.css</a>'+
+						'</div>'+
 					'</div>');
 		dad = dad.children().first();
-		
+		dad.children().last().children().first().click(desapareceLinkApareseSelectorDeArchivos);
 		
 		//alert(mainContainer.prop('class'));
 		//zona de datos de los style
@@ -178,6 +181,11 @@ $(document).ready(function(){
 		}
 	});
 });
+function desapareceLinkApareseSelectorDeArchivos(){
+	var elSelector = $("#tags").parent();
+	elSelector.insertAfter($(this));
+	//falta desaparecerlo, solo lo he movido
+}
 // SELECTORS CONTAINER
 function clickAddSelector(){
 		addSelectorToDivSelectors($(this).prev(), "", true);
