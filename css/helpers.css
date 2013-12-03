@@ -39,5 +39,5 @@ background: -webkit-linear-gradient(#fff, #999);
 }
 
 #attrModificator>p:last-child {
-  text-align:right;
+  text-align:left;
 }

@@ -265,7 +265,7 @@ function handleClick(e){
 		seleccion.push(this);
 		this.classList.add("seleccionado");
 	}	
-	// llamarCadaVezQueSeAgregueElementoALaSeleccion();
+	llamarCadaVezQueSeAgregueElementoALaSeleccion();
 	e.stopPropagation();
 }
 
@@ -323,7 +323,7 @@ function handleClickForCleanSelection(e){
 		var temp=document.getElementsByTagName("*");
 		for(var i=0;i<temp.length;i++) temp[i].classList.remove("seleccionado");
 		seleccion=new Array();
-		// llamarCadaVezQueSeAgregueElementoALaSeleccion();
+		llamarCadaVezQueSeAgregueElementoALaSeleccion();
 	}
 }
 
@@ -358,6 +358,7 @@ function handleKeyDownForShortcuts(e){
 				ids.splice(ids.indexOf(seleccion[0].id),1);
 			}
 		}
+		llamarCadaVezQueSeAgregueElementoALaSeleccion();
 		return;
 	}
 	if(e.ctrlKey && e.shiftKey){
@@ -375,7 +376,7 @@ function handleKeyDownForShortcuts(e){
 							seleccion.push(des);
 						}
 					});
-					// llamarCadaVezQueSeAgregueElementoALaSeleccion();
+					llamarCadaVezQueSeAgregueElementoALaSeleccion();
 					break;
 			//Ctrl+Shift+V
 			case 86:if(seleccion.length==0){
@@ -420,6 +421,7 @@ function handleKeyDownForShortcuts(e){
 							seleccion[0].parentNode.removeChild(seleccion[0]);
 						}
 					}
+					llamarCadaVezQueSeAgregueElementoALaSeleccion()
 					break;
 		}
 		return;
