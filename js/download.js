@@ -8,16 +8,9 @@ $(document).ready(function(){
   //opcionalmente se puede pasar otra funcion que se ejecute cuando suceda un error
   chrome.fileSystem.chooseEntry(config, function(writableEntry) {//Esto muestra la ventanaGuardar como...
 	//Al crearse o seleccionarse el archivo
-	conf[0]=writableEntry.name.substring(0,writableEntry.name.lastIndexOf(".")-1);
+	conf[0]=writableEntry.name.substring(0,writableEntry.name.lastIndexOf("."));
 	var zip= new JSZip();//creamos el .zip
-	/******************************************************
-	*****                                             *****
-	*****                                             *****
-	*****     Aqui deben generarse los archivos       *****
-	*****    que se vayan a introducir en el zip      *****
-	*****                                             *****
-	*****                                             *****
-	******************************************************/
+	zip.file('css/'+conf[0]+'.css', sudoDameLosFormatosCSS());
 	zip.file(conf[0]+'.html', genHTML());//agregando archivo html
 	//y el contenido de estos
     var blob = new Blob([zip.generate({type:"blob"})], {type: 'application/zip'});//ESto crea el Blob que se guardara en el sistema local
