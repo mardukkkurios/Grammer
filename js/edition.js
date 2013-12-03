@@ -4,6 +4,7 @@ var dragOrigin = 0;
 var seleccion = new Array();
 var clipboard= new Array();
 var idCounter = 1000000;
+var ids=new Array();
 
 //**********ONLOAD**********************************//
 $(document).ready(function(){	
@@ -60,7 +61,6 @@ function handleDrop(e){
 		}
 		for(var k in temp){
 			this.appendChild(temp[k]);
-			temp[k].style.opacity="1.0";
 		}
 
 		if(e.dataTransfer.effectAllowed=='copy'){
@@ -75,7 +75,6 @@ function handleDrop(e){
 }
 
 function handleDragEnd(e){
-	this.style.opacity = '1.0';  // this / e.target is the source node.
 }
 
 ////********Resize and Move********////
@@ -110,7 +109,6 @@ function handleDragEndForResize(e){
 	$(this).width(newWidth);
 	$(this).height(newHeight);
 	dragOrigin=0;
-	this.style.opacity = '1.0';
 	return false;
 }
 
@@ -129,7 +127,6 @@ function handleDragStartForResize(e){
 		if(e.offsetY<10) dragOrigin=1;
 	}
 	if(dragOrigin==5){
-		this.style.opacity = '0.4'; 
 		dragSrcEl = this;
 		e.dataTransfer.effectAllowed = 'move';
 		e.dataTransfer.setData('text/html', this.innerHTML);
@@ -147,34 +144,36 @@ function handleDragStartForResize(e){
 }
 
 function handleDropForMove(e){
-	if(dragOrigin==5){
-		e.stopPropagation();
-		var t=document.getElementsByClassName('over');
-		for(var i=0;i<t.length;i++) t[i].classList.remove('over');
+	if(dragOrigin==5){//Se esta arrastrando, no redimencionando
+		e.stopPropagation();//Impide que se siga extendiendo la bubuja del evento
 		
-		var temp=new Array();
-		if(e.dataTransfer.effectAllowed=='copy'){
+		var temp=new Array();//elementos que se insertaran
+		if(e.dataTransfer.effectAllowed=='copy'){//Esto se ejecutara cuando se este arrastrando un elemento desde la paleta
 			var p= new DOMParser();
 			var category=elementoPorLabel(dragSrcEl.children[1].textContent).category;
 			var element=elementoPorLabel(dragSrcEl.children[1].textContent).HTMLContent;
 			var node=p.parseFromString(element,"text/html").firstChild.children[1].firstChild;
 			temp.push(node);
 		}
-		if(e.dataTransfer.effectAllowed=='move') temp=seleccion;
+		if(e.dataTransfer.effectAllowed=='move') temp=seleccion;//Esto es cuando seestan arrastrando elementos desde la interfaz de edicion
 
-		for(var k in temp){
-			if(e.offsetY < this.offsetHeight/5) this.parentNode.insertBefore(temp[k],this);
+		for(var k in temp){//Iterar por todos los elementos que vayan a insertarse
+			if(e.offsetY < this.offsetHeight/5) this.parentNode.insertBefore(temp[k],this);// Si el puntero esta a un quinto de la altura se inserta antes
 			else{ 
-				if(e.offsetY > this.offsetHeight*4/5) insertAfter(temp[k],this);
+				if(e.offsetY > this.offsetHeight*4/5) insertAfter(temp[k],this);//Si seta entre 4 quintos y el fondo se inserta despues
 				else{
-					if(e.offsetX < this.offsetWidth/5) this.parentNode.insertBefore(temp[k],this);
+					if(e.offsetX < this.offsetWidth/5) this.parentNode.insertBefore(temp[k],this);//Si esta en medio, se analiza el ancho, si esta a un quinto de la anchura se inserta antes
 					else{
-						if(e.offsetX > this.offsetWidth*4/5) insertAfter(temp[k],this);
-						else this.appendChild(temp[k]);
+						if(e.offsetX > this.offsetWidth*4/5) insertAfter(temp[k],this);//Si esta entre cuatro quintos y el final se inserta despues
+						else{ //Si ninguna de estas condiciones se cumple entonces se insertara dentro
+							if(this.classList.contains("divInput")||this.tagName=="LABEL"||this.tagName=="A"||(this.tagName.length==2&&this.tagName.substr(0,1)=="H")){//no se puede insertar elementos en inputs, imagenes, labels, links ni headings
+							   if(e.dataTransfer.effectAllowed=='copy')this.parentNode.appendChild(temp[k]);//En ese caso se insertara en sus padres solo cuando se inserten elementos desde la paleta
+							}
+							else this.appendChild(temp[k]);
+						}
 					}
 				}
 			}
-			temp[k].style.opacity = "1.0";
 		}
 		if(e.dataTransfer.effectAllowed=='copy'){
 			if(category=="Prefabricados"){addEvents(node,true);}
@@ -219,7 +218,6 @@ function handleDragEndForResizeInput(e){
 	$(this.firstChild).width(newWidth);
 	$(this.firstChild).height(newHeight);
 	dragOrigin=0;
-	this.style.opacity = '1.0';
 	return false;
 }
 
@@ -234,7 +232,6 @@ function handleDragStartForResizeInput(e){
 		if(e.offsetY<this.offsetHeight-10) dragOrigin=5;
 	}
 	if(dragOrigin==5){
-		this.parentNode.style.opacity = '0.4'; 
 		dragSrcEl = this.parentNode;
 		e.dataTransfer.effectAllowed = 'move';
 		e.dataTransfer.setData('text/html', this.parentNode.innerHTML);
@@ -268,7 +265,7 @@ function handleClick(e){
 		seleccion.push(this);
 		this.classList.add("seleccionado");
 	}	
-	llamarCadaVezQueSeAgregueElementoALaSeleccion();
+	// llamarCadaVezQueSeAgregueElementoALaSeleccion();
 	e.stopPropagation();
 }
 
@@ -279,6 +276,7 @@ function handleDoubleClick(e){
 	$("#attrModificator").css("left",e.clientX);
 	$("#attrModificatorContainer").fadeIn(100);
 	elementoPorTag(this).helper.managment(this);
+	helperID(this);
 	// var tdesc;
 	// if(e.ctrlKey==true){//revisamos si esta o no la tecla control presionada
 		// if(seleccion.indexOf(this)==-1){//si lo esta revisamos si el elemento clickeado esta actualmente entre los elementos seleccionados
@@ -325,7 +323,7 @@ function handleClickForCleanSelection(e){
 		var temp=document.getElementsByTagName("*");
 		for(var i=0;i<temp.length;i++) temp[i].classList.remove("seleccionado");
 		seleccion=new Array();
-		llamarCadaVezQueSeAgregueElementoALaSeleccion();
+		// llamarCadaVezQueSeAgregueElementoALaSeleccion();
 	}
 }
 
@@ -357,6 +355,7 @@ function handleKeyDownForShortcuts(e){
 			else{
 				// while(seleccion[0].children.length>0) seleccion[0].parentNode.insertBefore(seleccion[0].children[0],seleccion[0]);
 				seleccion[0].parentNode.removeChild(seleccion[0]);
+				ids.splice(ids.indexOf(seleccion[0].id),1);
 			}
 		}
 		return;
@@ -368,7 +367,7 @@ function handleKeyDownForShortcuts(e){
 					for(var i=0;i<seleccion.length;i++) clipboard.push(seleccion[i].cloneNode(true));
 					break;
 			//Ctrl+Shift+E
-			case 69:var d=document.querySelectorAll("#interfazDeEdicion *");
+			case 69:var d=document.querySelectorAll("#interfazDeEdicion body *");
 					seleccion=new Array();
 					[].forEach.call(d,function(des){
 						if(des.tagName!="INPUT" && des.tagName!="IMG" && !des.classList.contains("divInputHelp")){
@@ -376,7 +375,7 @@ function handleKeyDownForShortcuts(e){
 							seleccion.push(des);
 						}
 					});
-					llamarCadaVezQueSeAgregueElementoALaSeleccion();
+					// llamarCadaVezQueSeAgregueElementoALaSeleccion();
 					break;
 			//Ctrl+Shift+V
 			case 86:if(seleccion.length==0){
@@ -455,6 +454,7 @@ function addEvents(element,deep){
 		input=true;
 	}
 	element.setAttribute("ID","_3L3M3NTO_P4R4_B0RR4R_" + ++idCounter);
+	ids.push(element.id);
 	element.addEventListener('dblclick', handleDoubleClick, false);
 	element.addEventListener('dragstart', handleDragStartForResize, false);
 	element.addEventListener('dragenter', handleDragEnter, false);

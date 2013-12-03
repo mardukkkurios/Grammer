@@ -1,13 +1,16 @@
-body .bodyPrincipal{
+body.bodyPrincipal{
 	font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
-	font-size: 62.5%;
 	width: auto;
+	font-size:18px;
 	padding: 0px;
 	margin: 0px;
 	border: 0px;
 	height: auto;
 }
 
+#interfazDeEdicion *:not(.divInputHelp):not( body):not( input):not( img){
+    outline: #949494 thin dashed; 
+}
 #interfazDeEdicion{
 	position:relative;
 	top: 50px;
@@ -16,7 +19,7 @@ body .bodyPrincipal{
 } 
  
 .seleccionado{
-	outline: #949494 thin dashed !important; 
+	outline: #2948E5 medium solid !important; 
 } 
 
 .divInput{

@@ -1,20 +1,6 @@
 
- .ContenedorAzulFuerte
- {
-	 background-color:#0000FF;
-	 padding: 10px 10px 10px 10px;
-	 margin:30px;
-	 border-style:solid;
-	 border-width:3px;
- }
- 
-  .ContenedorAzulClaro
-{
-	 background-color:#A9D0F5;
-	 padding: 0px 0px 0px 0px;
-	 margin:30px;
-	 border-style:solid;
-	 border-width:3px;
+ .containerStart{
+  min-height:20px;
  }
  
  /*login*/
