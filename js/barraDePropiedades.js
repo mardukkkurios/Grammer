@@ -190,10 +190,10 @@ function desapareceLinkApareseSelectorDeArchivos(){
 	//var styleSheet = jQuery.data(mainContainer[0],"styleSheet");
 	//resultado = styleSheet.toString();
 	//console.log(resultado);
-	var result = sudoDameLosFormatosCSS();
-	console.log(result);
-	console.log("////////////////////////////////");
-	alert(result);
+	//var result = sudoDameLosFormatosCSS();
+	//console.log(result);
+	//console.log("////////////////////////////////");
+	//alert(result);
 	
 	var elSelector = $("#tags");
 	elSelector.parent().insertAfter($(this));
