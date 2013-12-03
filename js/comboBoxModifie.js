@@ -39,7 +39,8 @@ function miTextChanged(){
 	
 }
 function miFocusTerminoAgregar(){
-	if(focusGained==false)return;
+	if(focusGained==false)
+		return;
 	focusGained=false;
 	selector = $("#ui-widget-Su-Id");
 	selector.css('display', 'none');

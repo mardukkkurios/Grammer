@@ -3,8 +3,8 @@ $(document).ready(function(){
 	$(".SelectorDeClases .izquierdaAbajo").click(function(){
 	agregaNuevaClaseALasTagsDeClases($(this).prev(), "", true);
 	});
-	//construirSelectorDeClases(".hola, .adios, .lalala");
-	//construirSelectorDeClases(".hola, .adios, .lalala");
+	//construirSelectorDeClases("hola");
+	//construirSelectorDeClases("hola");
 	//alert(getSelectorDeClasesValue());
 });
 function agregaNuevaClaseALasTagsDeClases(container, cad, selected){
@@ -88,11 +88,19 @@ function construirSelectorDeClases(clases){
 	var comaAnterior = 0;
 	var container = $(".objectClassesContainer");
 	while((coma = clases.indexOf(",", comaAnterior+1)) != -1){
-		agregaNuevaClaseALasTagsDeClases(container, corrigeClaseYBorraEspacios(clases.substring(comaAnterior+1, coma)), false);
+		if(comaAnterior > 0)
+			agregaNuevaClaseALasTagsDeClases(container, corrigeClaseYBorraEspacios(clases.substring(comaAnterior+1, coma)), false);
+		else
+			agregaNuevaClaseALasTagsDeClases(container, corrigeClaseYBorraEspacios(clases.substring(0, coma)), false);
 		comaAnterior = coma;
 	}
 	if(coma<clases.length) 
-		agregaNuevaClaseALasTagsDeClases(container, corrigeClaseYBorraEspacios(clases.substring(comaAnterior+1, clases.length)), false);
+		if(comaAnterior > 0)
+			agregaNuevaClaseALasTagsDeClases(container, corrigeClaseYBorraEspacios(clases.substring(comaAnterior+1, clases.length)), false);
+		else
+			agregaNuevaClaseALasTagsDeClases(container, corrigeClaseYBorraEspacios(clases.substring(0, clases.length)), false);
+		
+		
 }
 function destruirSelectorDeClases(){
 	$(".objectClassesContainer")[0].innerHTML = "";

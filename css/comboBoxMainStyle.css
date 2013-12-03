@@ -19,14 +19,16 @@
 
  
 /*ADDED BY CRIS*/
-#ui-widget-Su-Id{
-margin-left: -5px;
+#ui-widget-Su-Id {
+margin-right: 100px;
 display: none;
+font-weight: normal;
 }
 #ui-widget-Su-Id .custom-combobox a{
 display:inline;
 margin: 0px;
 }
 #ui-widget-Su-Id .custom-combobox input{
-width: 90px;
+width: 78px;
+font-weight: normal;
 }

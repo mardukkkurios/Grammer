@@ -124,6 +124,14 @@ function getSelectedElementsInnerData(){
 
 function colectorDeBasura(estilo){
 	if(estilo.length==0) return;
+	//movamos estas cosas para no borrarlas
+	var selectStyles = $("#ui-widget-Su-Id");
+	$(".propertiesContainer").append(selectStyles);
+	var selectArchivos = $("#tags").parent();
+	selectArchivos.css('display', 'none');
+	$(".propertiesContainer").append(selectArchivos);
+	
+	
 	var selectores = estilo.children().first().children().first().children("a");
 	if(selectores.length > 0){
 		//continua 

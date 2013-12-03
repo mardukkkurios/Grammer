@@ -41,7 +41,8 @@ function desapareceInputApareceLink(e){
 		if(dad.next().next().is("td")){
 			if(isBlank(dad.next().next().children().first().text())){ 
 				event.preventDefault();
-				dad.next().next()[0].click().focus();
+				dad.next().next()[0].click();
+				dad.next().next().focus();
 			}
 		}
  }
@@ -149,7 +150,7 @@ $(document).ready(function(){
 							'<div class="izquierdaAbajo">}	</div>'+
 						'</div>'+
 						'<div class="fileContainer">'+
-							'<a title="style.css">style.css</a>'+
+							'<a>Style.css</a>'+
 						'</div>'+
 					'</div>');
 		dad = dad.children().first();
@@ -182,9 +183,26 @@ $(document).ready(function(){
 	});
 });
 function desapareceLinkApareseSelectorDeArchivos(){
-	var elSelector = $("#tags").parent();
-	elSelector.insertAfter($(this));
+	var mainContainer = $(this)//link
+						.parent() //fileContainer
+						.parent(); //styleSheetContainer
+	
+	//var styleSheet = jQuery.data(mainContainer[0],"styleSheet");
+	//resultado = styleSheet.toString();
+	//console.log(resultado);
+	var result = sudoDameLosFormatosCSS();
+	console.log(result);
+	console.log("////////////////////////////////");
+	alert(result);
+	
+	var elSelector = $("#tags");
+	elSelector.parent().insertAfter($(this));
 	//falta desaparecerlo, solo lo he movido
+	$(this).css('display', 'none');
+	$(this).next().css('display', 'block');
+	elSelector.val($(this).text());		
+	elSelector.focus()
+			.select();
 }
 // SELECTORS CONTAINER
 function clickAddSelector(){

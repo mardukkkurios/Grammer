@@ -28,6 +28,7 @@ margin-top: -9px;
 margin-bottom: 15px;
 
 margin-right: 5px;
+display: none;
 }
 .ui-widget label{
 text-decoration: none;
@@ -38,10 +39,6 @@ font-size: 12px;
 text-align: right;
 font-family: arial;
 }
-#ui-widget-Su-Id-Archivos{
-display: none;
-}
-
 /****PROPERTIES MENU***********************/
 .propertiesMenu{
 height: 40px;
@@ -160,7 +157,6 @@ text-decoration: none;
 font-size: 14px;
 }
 /******OTRA COSAS DE PROPIEDADES*****************/
-
 .propertiesContainer {
 margin-left: 5px;
 margin-top: 10px;
