@@ -7,22 +7,16 @@ function genHead(){
 	if(conf[2]!=""){head+="\t\t<meta name=\"description\" content=\""+conf[2]+"\" />\n";}
 	if(conf[3]!=""){head+="\t\t<meta name=\"keywords\" content=\""+conf[3]+"\" />\n";}
 	if(conf[4]!=""){head+="\t\t<meta charset=\""+conf[4]+"\" />\n";}
-	/******************************************************
-	*****                                             *****
-	*****               links y scripts               *****
-	*****                                             *****
-	******************************************************/
+	head+="\t\t<link rel=\"style\" type=\"text/css\" href=\"css/"+conf[0]+".css\"/>\n";
 	head+="\t</head>\n";
 	return head;
 }
 
 function genBody(){
 	var body="<body>\n";
-	/******************************************************
-	*****                                             *****
-	*****                 crear body                  *****
-	*****                                             *****
-	******************************************************/
+	[].forEach.call(document.getElementsByTagName("body")[1].children,function(obj){
+		body+=elementHTML(2,obj);
+	})
 	body+="\t</body>\n";
 	return body;
 }
@@ -33,4 +27,27 @@ function genHTML(){
 	html+="\t"+genBody();
 	html+="</html>";
 	return html;
+}
+
+function elementHTML(tab,element){
+	var elhtml="";
+	for(var i=0;i<tab;i++) elhtml+="\t";
+	if(element.classList.contains("divInput")) element=element.firstChild;
+	elhtml+="<"+element.tagName.toLowerCase()+attributesHTML()+">";
+	if(element.hasChildNodes()){
+		elhtml+="\n";
+		[].forEach.call(element.childNodes,function(node){
+			if(node.nodeType==3){
+				for(var i=0;i<tab;i++) elhtml+="\t";
+				elhtml+="\t"+node.nodeValue+"\n";
+			}
+			else elhtml+=elementHTML(tab+1,node); 
+		});
+		for(var i=0;i<tab;i++) elhtml+="\t";
+	}
+	elhtml+="</"+element.tagName.toLowerCase()+">\n";
+	return elhtml;
+}
+function attributesHTML(){
+	return "";
 }
