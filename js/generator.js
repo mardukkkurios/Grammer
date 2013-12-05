@@ -7,7 +7,7 @@ function genHead(){
 	if(conf[2]!=""){head+="\t\t<meta name=\"description\" content=\""+conf[2]+"\" />\n";}
 	if(conf[3]!=""){head+="\t\t<meta name=\"keywords\" content=\""+conf[3]+"\" />\n";}
 	if(conf[4]!=""){head+="\t\t<meta charset=\""+conf[4]+"\" />\n";}
-	head+="\t\t<link rel=\"style\" type=\"text/css\" href=\"css/"+conf[0]+".css\"/>\n";
+	head+="\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"css/"+conf[0]+".css\"/>\n";
 	head+="\t</head>\n";
 	return head;
 }

@@ -349,6 +349,17 @@ function handleMouseMove(e){//Solo para q cambie el cursor
 ////*******Shortcuts*******////
 function handleKeyDownForShortcuts(e){
 	//DEL
+	
+	if(e.target.parentNode.id=="attrModificatorChange"||e.target.id=="newID"){
+		e.stopPropagation();
+		return;
+	}
+	if(e.target.parentNode.parentNode.classList!=undefined){
+		if(e.target.parentNode.parentNode.classList.contains("objectClassesContainer")){
+			e.stopPropagation();
+			return;
+		}
+	}
 	if(e.keyCode==46){
 		while(seleccion.length>0){
 			if(seleccion[0]==null||seleccion[0].parentNode==null) seleccion.shift();
