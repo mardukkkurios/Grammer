@@ -10,8 +10,8 @@
     margin-left: -1px;
     padding: 0;
     /* support: IE7 */
-    *height: 1.7em;
-    *top: 0.1em;
+    height: 1.7em;
+    top: 0.1em;
 }
 
 .custom-combobox-input {

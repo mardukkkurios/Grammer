@@ -1,6 +1,6 @@
-(function( $ ) {
+$(document).ready(function( $ ) {
     $.widget( "custom.combobox", {
-      _create: function() {
+      "_create": function() {
         this.wrapper = $( "<span>" )
           .addClass( "custom-combobox" )
           .insertAfter( this.element );
@@ -10,10 +10,11 @@
         this._createShowAllButton();
       },
  
-      _createAutocomplete: function() {
+      "_createAutocomplete": function() {
+	  console.log("hi 0");
         var selected = this.element.children( ":selected" ),
           value = selected.val() ? selected.text() : "";
- 
+		console.log("hi 1");
         this.input = $( "<input>" )
           .appendTo( this.wrapper )
           .val( value )
@@ -37,20 +38,20 @@
           .keyup(miTextChanged)
 		  .on("input", null, null, miTextChanged)
           .autocomplete({
-            delay: 0,
-            minLength: 0,
-            source: $.proxy( this, "_source" )
+            "delay": 0,
+            "minLength": 0,
+            "source": $.proxy( this, "_source" )
           })
           .tooltip({
-            tooltipClass: "ui-state-highlight"
+            "tooltipClass": "ui-state-highlight"
           });
-		  
+		  console.log("hi 2");
  
         this._on( this.input, {
-          autocompleteselect: function( event, ui ) {
+          "autocompleteselect": function( event, ui ) {
             ui.item.option.selected = true;
             this._trigger( "select", event, {
-              item: ui.item.option
+              "item": ui.item.option
             });
 			document.getElementById("EscribeCssTextbox").value = ui.item.option.text;
 			miTextChanged();
@@ -60,7 +61,7 @@
         });
       },
  
-      _createShowAllButton: function() {
+      "_createShowAllButton": function() {
         var input = this.input,
           wasOpen = false;
  
@@ -70,10 +71,10 @@
           .tooltip()
           .appendTo( this.wrapper )
           .button({
-            icons: {
-              primary: "ui-icon-triangle-1-s"
+            "icons": {
+              "primary": "ui-icon-triangle-1-s"
             },
-            text: false
+            "text": false
           })
           .removeClass( "ui-corner-all" )
           .addClass( "custom-combobox-toggle ui-corner-right" )
@@ -94,20 +95,20 @@
           });
       },
  
-      _source: function( request, response ) {
+      "_source": function( request, response ) {
         var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
         response( this.element.children( "option" ).map(function() {
           var text = $( this ).text();
           if ( this.value && ( !request.term || matcher.test(text) ) )
             return {
-              label: text,
-              value: text,
-              option: this
+              "label": text,
+              "value": text,
+              "option": this
             };
         }) );
       },
  
-      _removeIfInvalid: function( event, ui ) {
+      "_removeIfInvalid": function( event, ui ) {
 		miFocusTerminoAgregar();
 		return;
         // Selected an item, nothing to do
@@ -144,17 +145,17 @@
         this.input.data( "ui-autocomplete" ).term = "";
       },
  
-      _destroy: function() {
+      "_destroy": function() {
         this.wrapper.remove();
         this.element.show();
       }
     });
-  })( jQuery );
+  });
  
  
  
  
-  $(function() {
+  $(document).ready(function( $ ) {
     $( "#combobox" ).combobox();
     $( "#toggle" ).click(function() {
 	  event.preventDefault();

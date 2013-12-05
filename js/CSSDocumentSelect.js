@@ -1,10 +1,10 @@
 var availableTagsForFiles = [
       "Style.css"
     ];
-  $(function() {
-    $( "#tags" ).autocomplete({ minLength: 0, source: availableTagsForFiles })
-				.click(function(e){$('#' + e.target.id).keydown()})
-				.blur(function(e){
+ $(document).ready(function() {
+	 //$( "#tags" ).autocomplete({ "minLength": 0, "source": availableTagsForFiles }); // causa errores en modo app
+				$( "#tags" ).click(function(e){$('#' + e.target.id).keydown()});
+				$( "#tags" ).blur(function(e){
 					var nuevo = $(this).val();
 					if(isBlank(nuevo)){
 						$(this).parent().css('display', 'none');
@@ -31,8 +31,8 @@ var availableTagsForFiles = [
 					$(this).parent().prev().css('display', 'block');
 					$(this).parent().prev().text(nuevo);
 					return;
-				})
-				.bind('keypress', function (event) {
+				});
+				$( "#tags" ).bind('keypress', function (event) {
 					if(event.which == 32){
 						event.preventDefault();
 					}

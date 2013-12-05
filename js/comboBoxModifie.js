@@ -24,17 +24,17 @@ function miFocusInicio(){
 }
 var lastText = "";
 function miTextChanged(){
-	var input = document.getElementById("EscribeCssTextbox");
-	text = input.value;
+	var input = $("#EscribeCssTextbox");
+	text = input.val();
 	//revisa si hay comas
 	var regex = new RegExp(",+");
 	if (regex.test(text)) {
-		input.value = text.replaceAll(","," ");
+		input.val() = text.replaceAll(","," ");
 	}
 	//if(focusGained == false)return;
 	//alert(event.which);
-	if(lastText === input.value) return;
-	lastText = input.value;
+	if(lastText === input.val()) return;
+	lastText = input.val();
 	ocupaCambio();
 	
 }
@@ -84,8 +84,8 @@ function cambiaContenidoDelSelector(newValue, link){
 }
 function ocupaCambio(){
 
-	var input = document.getElementById("EscribeCssTextbox");
-	var text = input.value;
+	var input = $("#EscribeCssTextbox");
+	var text = input.val();
 	//alert("."+text+".");
 	//recorre iterador hasta la primera letra o a len
 	var it=0;
